@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Integrasi Data Cloud (Aiven) &amp; Analisis Statistik Data Kualitas Udara (KNIME) &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'statistik_kualitas_udara';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Pertemuan_2" href="pertemuan_2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/foto.jpeg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/foto.jpeg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Mohammad Waqidi
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_1.html">Pertemuan_1`</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="kualitas_udara.html">Mengamati Kualitas Udara Sumenep</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pertemuan_2.html">Pertemuan_2</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Integrasi Data Cloud (Aiven) &amp; Analisis Statistik Data Kualitas Udara (KNIME)</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fstatistik_kualitas_udara.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/statistik_kualitas_udara.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Integrasi Data Cloud (Aiven) & Analisis Statistik Data Kualitas Udara (KNIME)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memindahkan-data-ke-cloud-database-aiven-postgresql">1. Memindahkan Data ke Cloud Database (Aiven PostgreSQL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data-dari-cloud-ke-knime-dan-menangani-missing-value">2. Menarik Data dari Cloud ke KNIME dan Menangani Missing Value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-properti-statistik-knime">3. Penjelasan Properti Statistik KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-perhitungan-manual-properti-statistik">4. Contoh Perhitungan Manual Properti Statistik</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="integrasi-data-cloud-aiven-analisis-statistik-data-kualitas-udara-knime">
+<h1>Integrasi Data Cloud (Aiven) &amp; Analisis Statistik Data Kualitas Udara (KNIME)<a class="headerlink" href="#integrasi-data-cloud-aiven-analisis-statistik-data-kualitas-udara-knime" title="Permalink to this heading">#</a></h1>
+<section id="memindahkan-data-ke-cloud-database-aiven-postgresql">
+<h2>1. Memindahkan Data ke Cloud Database (Aiven PostgreSQL)<a class="headerlink" href="#memindahkan-data-ke-cloud-database-aiven-postgresql" title="Permalink to this heading">#</a></h2>
+<p>Langkah pertama adalah memindahkan data kualitas udara (NO2, CO, CH4, SO2) dari satelit Sentinel-5P yang diolah menggunakan Python (Pandas) ke <em>cloud database</em>.
+Layanan <em>cloud</em> yang digunakan adalah <strong>Aiven for PostgreSQL</strong>.</p>
+<p><strong>Langkah-langkah:</strong></p>
+<ol class="arabic simple">
+<li><p>Membuat <em>project</em> dan layanan PostgreSQL di <em>dashboard</em> Aiven menggunakan paket gratis (<em>Free Plan</em>).</p></li>
+<li><p>Mendapatkan <code class="docutils literal notranslate"><span class="pre">Service</span> <span class="pre">URI</span></code> dari <em>dashboard</em> Aiven sebagai kredensial koneksi.</p></li>
+<li><p>Menggunakan <em>library</em> <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code> di Python untuk menyambungkan dan mengirim data <em>DataFrame</em> (<code class="docutils literal notranslate"><span class="pre">df_filtered</span></code>) langsung ke <em>database</em> menggunakan fungsi <code class="docutils literal notranslate"><span class="pre">to_sql()</span></code>.</p></li>
+</ol>
+<p><strong>Code yang di gunakan</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="n">AIVEN_URI</span> <span class="o">=</span> <span class="s2">&quot;URL_AIVEN&quot;</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">AIVEN_URI</span><span class="p">)</span>
+
+<span class="n">nama_tabel_di_db</span> <span class="o">=</span> <span class="s2">&quot;kualitas_udara_sumenep&quot;</span>
+
+<span class="n">df_filtered</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">nama_tabel_di_db</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data berhasil diunggah ke tabel &#39;</span><span class="si">{</span><span class="n">nama_tabel_di_db</span><span class="si">}</span><span class="s2">&#39; di Aiven!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="menarik-data-dari-cloud-ke-knime-dan-menangani-missing-value">
+<h2>2. Menarik Data dari Cloud ke KNIME dan Menangani Missing Value<a class="headerlink" href="#menarik-data-dari-cloud-ke-knime-dan-menangani-missing-value" title="Permalink to this heading">#</a></h2>
+<p>Setelah data tersimpan di Aiven, data tersebut ditarik ke aplikasi <strong>KNIME Analytics Platform</strong> untuk dilakukan analisis statistik deskriptif. Karena terdapat data satelit yang kosong (<em>missing value</em> seperti pada gas SO2), maka ditambahkan perlakuan khusus sebelum menghitung statistik.</p>
+<p><strong>Alur Kerja (Workflow) di KNIME:</strong>
+<img alt="workflow" src="_images/workflow.png" /></p>
+<ol class="arabic simple">
+<li><p><strong>PostgreSQL Connector:</strong> Mengkonfigurasi connection setting mulai dari host name, database name, user name, dan password serta Mengkonfigurasi parameter JDBC (<code class="docutils literal notranslate"><span class="pre">sslmode</span> <span class="pre">=</span> <span class="pre">require</span></code>) dan kredensial untuk terhubung ke Aiven.
+<img alt="connection" src="_images/connection.png" />
+<img alt="JDBC" src="_images/JDBC.png" /></p></li>
+<li><p><strong>DB Table Selector:</strong> Memilih tabel <code class="docutils literal notranslate"><span class="pre">kualitas_udara_sumenep</span></code> dari dalam <em>schema public</em>.
+<img alt="table-selector" src="_images/table-selector.png" /></p></li>
+<li><p><strong>DB Reader:</strong> Mengunduh (membaca) data dari <em>database cloud</em> agar masuk ke memori fisik KNIME.</p></li>
+<li><p><strong>Missing Value:</strong> Menangani data yang bernilai kosong (NaN). Untuk data numerik (<em>Float</em>), kekosongan diatasi menggunakan metode <em>Linear Interpolation</em>.
+<img alt="missing" src="_images/missing.png" /></p></li>
+<li><p><strong>Normalizer:</strong> Menskalakan nilai data seluruh gas menggunakan metode <em>Min-Max Normalization</em> (0 hingga 1). Hal ini sangat penting karena nilai asli gas seperti NO2 sangatlah kecil. Tanpa normalisasi, garis gas dengan nilai kecil tidak akan terlihat fluktuasinya saat digabungkan dalam satu grafik.
+<img alt="normalizer" src="_images/normalizer.png" /></p></li>
+<li><p><strong>Statistics &amp; Line Plot:</strong> Menghasilkan tabel ringkasan metrik statistik dan visualisasi grafik garis.
+<img alt="statistik" src="_images/statistik.png" />
+<img alt="line-plot" src="_images/Line-Plot.png" /></p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="penjelasan-properti-statistik-knime">
+<h2>3. Penjelasan Properti Statistik KNIME<a class="headerlink" href="#penjelasan-properti-statistik-knime" title="Permalink to this heading">#</a></h2>
+<p>Berikut adalah penjelasan dari masing-masing properti yang dihasilkan oleh <em>node</em> <strong>Statistics</strong> di KNIME:</p>
+<ul class="simple">
+<li><p><strong>Column:</strong> Nama atribut atau variabel yang sedang dianalisis (contoh: NO2, CO, CH4, SO2).</p></li>
+<li><p><strong>Min (Minimum):</strong> Nilai observasi terkecil yang ditemukan di dalam kolom tersebut.</p></li>
+<li><p><strong>Mean (Rata-rata):</strong> Nilai rata-rata hitung aritmetika dari seluruh baris data pada kolom tersebut.</p></li>
+<li><p><strong>Median (Nilai Tengah):</strong> Nilai yang membagi sekumpulan data menjadi dua bagian yang sama besar setelah data diurutkan dari yang terkecil hingga terbesar.</p></li>
+<li><p><strong>Max (Maximum):</strong> Nilai observasi terbesar yang ditemukan di dalam kolom tersebut.</p></li>
+<li><p><strong>Std. Dev. (Standar Deviasi / Simpangan Baku):</strong> Ukuran yang menunjukkan seberapa besar penyebaran (<em>dispersi</em>) data dari nilai rata-ratanya. Semakin besar nilainya, semakin bervariasi data tersebut.</p></li>
+<li><p><strong>Kurtosis:</strong> Ukuran “keruncingan” distribusi data. Menunjukkan proporsi data yang berada di bagian ekor distribusi dibandingkan dengan bagian tengahnya (berhubungan dengan adanya <em>outlier</em>).</p></li>
+<li><p><strong>Skewness (Kemencengan):</strong> Ukuran ketidaksimetrisan dari distribusi data terhadap nilai rata-ratanya. Nilai positif berarti ekor kurva memanjang ke kanan, nilai negatif memanjang ke kiri.</p></li>
+<li><p><strong>No. Missing:</strong> Jumlah baris/data yang kosong atau tidak memiliki nilai (<em>Null/NaN</em>). Berkat penggunaan <em>node Missing Value</em>, angka pada kolom ini bernilai 0.</p></li>
+<li><p><strong>No. +unlimited:</strong> Jumlah data yang memiliki nilai tak terhingga positif (<em>positive infinity</em>).</p></li>
+<li><p><strong>No. -unlimited:</strong> Jumlah data yang memiliki nilai tak terhingga negatif (<em>negative infinity</em>).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="contoh-perhitungan-manual-properti-statistik">
+<h2>4. Contoh Perhitungan Manual Properti Statistik<a class="headerlink" href="#contoh-perhitungan-manual-properti-statistik" title="Permalink to this heading">#</a></h2>
+<p>Untuk memahami bagaimana KNIME mendapatkan angka-angka tersebut, berikut adalah contoh perhitungan manual menggunakan sampel sederhana berupa 5 data harian acak:
+Sampel Data: <strong>X = {2, 4, 4, 6, 9}</strong> (sudah diurutkan). Jumlah data (n) = 5.</p>
+<ul class="simple">
+<li><p><strong>Min (Nilai Terkecil):</strong> Berdasarkan sampel, nilai terkecil adalah <strong>2</strong>.</p></li>
+<li><p><strong>Max (Nilai Terbesar):</strong> Berdasarkan sampel, nilai terbesar adalah <strong>9</strong>.</p></li>
+<li><p><strong>Median (Nilai Tengah):</strong> Karena jumlah data ganjil (5 data), median adalah nilai urutan ke-3, yaitu <strong>4</strong>.</p></li>
+<li><p><strong>Mean (Rata-rata):</strong>
+Jumlah seluruh data dibagi banyaknya data.
+$<span class="math notranslate nohighlight">\(Mean = \frac{2 + 4 + 4 + 6 + 9}{5} = \frac{25}{5} = 5\)</span>$</p></li>
+<li><p><strong>Std. Dev. (Standar Deviasi Sampel):</strong>
+Menggunakan rumus sampel: $<span class="math notranslate nohighlight">\(s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}}\)</span>$
+Langkah:</p>
+<ol class="arabic simple">
+<li><p>Hitung selisih kuadrat setiap data terhadap <em>Mean</em> (5):
+<span class="math notranslate nohighlight">\((2-5)^2 = 9\)</span>
+<span class="math notranslate nohighlight">\((4-5)^2 = 1\)</span>
+<span class="math notranslate nohighlight">\((4-5)^2 = 1\)</span>
+<span class="math notranslate nohighlight">\((6-5)^2 = 1\)</span>
+<span class="math notranslate nohighlight">\((9-5)^2 = 16\)</span></p></li>
+<li><p>Jumlahkan hasil kuadrat tersebut: <span class="math notranslate nohighlight">\(9 + 1 + 1 + 1 + 16 = 28\)</span></p></li>
+<li><p>Bagi dengan <span class="math notranslate nohighlight">\(n-1\)</span> (yaitu 4): <span class="math notranslate nohighlight">\(28 / 4 = 7\)</span></p></li>
+<li><p>Akar kuadratkan: <span class="math notranslate nohighlight">\(\sqrt{7} \approx 2.645\)</span>
+Jadi, standar deviasinya adalah <strong>2.645</strong>.</p></li>
+</ol>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pertemuan_2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Pertemuan_2</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memindahkan-data-ke-cloud-database-aiven-postgresql">1. Memindahkan Data ke Cloud Database (Aiven PostgreSQL)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data-dari-cloud-ke-knime-dan-menangani-missing-value">2. Menarik Data dari Cloud ke KNIME dan Menangani Missing Value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-properti-statistik-knime">3. Penjelasan Properti Statistik KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-perhitungan-manual-properti-statistik">4. Contoh Perhitungan Manual Properti Statistik</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mohammad Waqidi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
