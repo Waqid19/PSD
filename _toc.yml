@@ -4,4 +4,9 @@
 format: jb-book
 root: intro
 chapters:
-- file: kualitas_udara
+- file: pertemuan_1
+  sections:
+    - file: kualitas_udara
+- file: pertemuan_2
+  sections:
+    - file: statistik_kualitas_udara
