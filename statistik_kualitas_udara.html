@@ -175,7 +175,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_1.html">Pertemuan_1`</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_1.html">Pertemuan_1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="kualitas_udara.html">Mengamati Kualitas Udara Sumenep</a></li>
 
 </ul>
@@ -425,23 +425,31 @@ Layanan <em>cloud</em> yang digunakan adalah <strong>Aiven for PostgreSQL</stron
 <section id="menarik-data-dari-cloud-ke-knime-dan-menangani-missing-value">
 <h2>2. Menarik Data dari Cloud ke KNIME dan Menangani Missing Value<a class="headerlink" href="#menarik-data-dari-cloud-ke-knime-dan-menangani-missing-value" title="Permalink to this heading">#</a></h2>
 <p>Setelah data tersimpan di Aiven, data tersebut ditarik ke aplikasi <strong>KNIME Analytics Platform</strong> untuk dilakukan analisis statistik deskriptif. Karena terdapat data satelit yang kosong (<em>missing value</em> seperti pada gas SO2), maka ditambahkan perlakuan khusus sebelum menghitung statistik.</p>
-<p><strong>Alur Kerja (Workflow) di KNIME:</strong>
-<img alt="workflow" src="_images/workflow.png" /></p>
+<p><strong>Alur Kerja (Workflow) di KNIME:</strong></p>
+<p><img alt="workflow" src="_images/workflow.png" /></p>
 <ol class="arabic simple">
-<li><p><strong>PostgreSQL Connector:</strong> Mengkonfigurasi connection setting mulai dari host name, database name, user name, dan password serta Mengkonfigurasi parameter JDBC (<code class="docutils literal notranslate"><span class="pre">sslmode</span> <span class="pre">=</span> <span class="pre">require</span></code>) dan kredensial untuk terhubung ke Aiven.
-<img alt="connection" src="_images/connection.png" />
-<img alt="JDBC" src="_images/JDBC.png" /></p></li>
-<li><p><strong>DB Table Selector:</strong> Memilih tabel <code class="docutils literal notranslate"><span class="pre">kualitas_udara_sumenep</span></code> dari dalam <em>schema public</em>.
-<img alt="table-selector" src="_images/table-selector.png" /></p></li>
-<li><p><strong>DB Reader:</strong> Mengunduh (membaca) data dari <em>database cloud</em> agar masuk ke memori fisik KNIME.</p></li>
-<li><p><strong>Missing Value:</strong> Menangani data yang bernilai kosong (NaN). Untuk data numerik (<em>Float</em>), kekosongan diatasi menggunakan metode <em>Linear Interpolation</em>.
-<img alt="missing" src="_images/missing.png" /></p></li>
-<li><p><strong>Normalizer:</strong> Menskalakan nilai data seluruh gas menggunakan metode <em>Min-Max Normalization</em> (0 hingga 1). Hal ini sangat penting karena nilai asli gas seperti NO2 sangatlah kecil. Tanpa normalisasi, garis gas dengan nilai kecil tidak akan terlihat fluktuasinya saat digabungkan dalam satu grafik.
-<img alt="normalizer" src="_images/normalizer.png" /></p></li>
-<li><p><strong>Statistics &amp; Line Plot:</strong> Menghasilkan tabel ringkasan metrik statistik dan visualisasi grafik garis.
-<img alt="statistik" src="_images/statistik.png" />
-<img alt="line-plot" src="_images/Line-Plot.png" /></p></li>
+<li><p><strong>PostgreSQL Connector:</strong> Mengkonfigurasi connection setting mulai dari host name, database name, user name, dan password serta Mengkonfigurasi parameter JDBC (<code class="docutils literal notranslate"><span class="pre">sslmode</span> <span class="pre">=</span> <span class="pre">require</span></code>) dan kredensial untuk terhubung ke Aiven.</p></li>
 </ol>
+<p><img alt="connection" src="_images/connection.png" /></p>
+<p><img alt="JDBC" src="_images/JDBC.png" /></p>
+<ol class="arabic simple" start="2">
+<li><p><strong>DB Table Selector:</strong> Memilih tabel <code class="docutils literal notranslate"><span class="pre">kualitas_udara_sumenep</span></code> dari dalam <em>schema public</em>.</p></li>
+</ol>
+<p><img alt="table-selector" src="_images/table-selector.png" /></p>
+<ol class="arabic simple" start="3">
+<li><p><strong>DB Reader:</strong> Mengunduh (membaca) data dari <em>database cloud</em> agar masuk ke memori fisik KNIME.</p></li>
+<li><p><strong>Missing Value:</strong> Menangani data yang bernilai kosong (NaN). Untuk data numerik (<em>Float</em>), kekosongan diatasi menggunakan metode <em>Linear Interpolation</em>.</p></li>
+</ol>
+<p><img alt="missing" src="_images/missing.png" /></p>
+<ol class="arabic simple" start="5">
+<li><p><strong>Normalizer:</strong> Menskalakan nilai data seluruh gas menggunakan metode <em>Min-Max Normalization</em> (0 hingga 1). Hal ini sangat penting karena nilai asli gas seperti NO2 sangatlah kecil. Tanpa normalisasi, garis gas dengan nilai kecil tidak akan terlihat fluktuasinya saat digabungkan dalam satu grafik.</p></li>
+</ol>
+<p><img alt="normalizer" src="_images/normalizer.png" /></p>
+<ol class="arabic simple" start="6">
+<li><p><strong>Statistics &amp; Line Plot:</strong> Menghasilkan tabel ringkasan metrik statistik dan visualisasi grafik garis.</p></li>
+</ol>
+<p><img alt="statistik" src="_images/statistik.png" /></p>
+<p><img alt="line-plot" src="_images/Line-Plot.png" /></p>
 </section>
 <hr class="docutils" />
 <section id="penjelasan-properti-statistik-knime">

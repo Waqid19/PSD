@@ -35,25 +35,33 @@ print(f"Data berhasil diunggah ke tabel '{nama_tabel_di_db}' di Aiven!")
 Setelah data tersimpan di Aiven, data tersebut ditarik ke aplikasi **KNIME Analytics Platform** untuk dilakukan analisis statistik deskriptif. Karena terdapat data satelit yang kosong (*missing value* seperti pada gas SO2), maka ditambahkan perlakuan khusus sebelum menghitung statistik.
 
 **Alur Kerja (Workflow) di KNIME:**
+
 ![workflow](img-pertemuan-2/workflow.png)
 
 1. **PostgreSQL Connector:** Mengkonfigurasi connection setting mulai dari host name, database name, user name, dan password serta Mengkonfigurasi parameter JDBC (`sslmode = require`) dan kredensial untuk terhubung ke Aiven.
+
 ![connection](img-pertemuan-2/connection.png)
+
 ![JDBC](img-pertemuan-2/JDBC.png)
 
 2. **DB Table Selector:** Memilih tabel `kualitas_udara_sumenep` dari dalam *schema public*.
+
 ![table-selector](img-pertemuan-2/table-selector.png)
 
 3. **DB Reader:** Mengunduh (membaca) data dari *database cloud* agar masuk ke memori fisik KNIME.
 
 4. **Missing Value:** Menangani data yang bernilai kosong (NaN). Untuk data numerik (*Float*), kekosongan diatasi menggunakan metode *Linear Interpolation*.
+
 ![missing](img-pertemuan-2/missing.png)
 
 5. **Normalizer:** Menskalakan nilai data seluruh gas menggunakan metode *Min-Max Normalization* (0 hingga 1). Hal ini sangat penting karena nilai asli gas seperti NO2 sangatlah kecil. Tanpa normalisasi, garis gas dengan nilai kecil tidak akan terlihat fluktuasinya saat digabungkan dalam satu grafik.
+
 ![normalizer](img-pertemuan-2/normalizer.png)
 
 6. **Statistics & Line Plot:** Menghasilkan tabel ringkasan metrik statistik dan visualisasi grafik garis.
+
 ![statistik](img-pertemuan-2/statistik.png)
+
 ![line-plot](img-pertemuan-2/Line-Plot.png)
 
 
