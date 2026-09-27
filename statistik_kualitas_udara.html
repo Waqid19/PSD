@@ -433,7 +433,7 @@ Layanan <em>cloud</em> yang digunakan adalah <strong>Aiven for PostgreSQL</stron
 <h2>2. Menarik Data dari Cloud ke KNIME dan Menangani Missing Value<a class="headerlink" href="#menarik-data-dari-cloud-ke-knime-dan-menangani-missing-value" title="Permalink to this heading">#</a></h2>
 <p>Setelah data tersimpan di Aiven, data tersebut ditarik ke aplikasi <strong>KNIME Analytics Platform</strong> untuk dilakukan analisis statistik deskriptif. Karena terdapat data satelit yang kosong (<em>missing value</em> seperti pada gas SO2), maka ditambahkan perlakuan khusus sebelum menghitung statistik.</p>
 <p><strong>Alur Kerja (Workflow) di KNIME:</strong></p>
-<p><img alt="workflow" src="_images/workflow.png" /></p>
+<p><img alt="workflow" src="_images/workflow1.png" /></p>
 <ol class="arabic simple">
 <li><p><strong>PostgreSQL Connector:</strong> Mengkonfigurasi connection setting mulai dari host name, database name, user name, dan password serta Mengkonfigurasi parameter JDBC (<code class="docutils literal notranslate"><span class="pre">sslmode</span> <span class="pre">=</span> <span class="pre">require</span></code>) dan kredensial untuk terhubung ke Aiven.</p></li>
 </ol>

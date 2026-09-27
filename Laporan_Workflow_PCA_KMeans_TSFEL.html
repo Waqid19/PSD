@@ -1,0 +1,1146 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Laporan_Workflow_PCA_KMeans_TSFEL';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/foto.jpeg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/foto.jpeg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Mohammad Waqidi
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_1.html">Pertemuan_1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="kualitas_udara.html">Mengamati Kualitas Udara Sumenep</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_2.html">Pertemuan_2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="statistik_kualitas_udara.html">Integrasi Data Cloud (Aiven) &amp; Analisis Statistik Data Kualitas Udara (KNIME)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_3.html">Pertemuan_3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="TSFEL_Penjelasan_dan_Contoh.html">Penjelasan Domain TSFEL &amp; TSFEL vs Python Manual</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="CO_lenteng_68_Fitur_TSFEL.html">Ekstraksi 68 Fitur TSFEL pada Data CO Lenteng</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FLaporan_Workflow_PCA_KMeans_TSFEL.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Laporan_Workflow_PCA_KMeans_TSFEL.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime">Analisis Data Fitur TSFEL Menggunakan PCA dan K-Means pada KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">1. Tujuan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-digunakan">2. Data yang Digunakan</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">3. Gambaran Workflow</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-setiap-node">4. Penjelasan Setiap Node</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">4.1 Excel Reader</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dibaca">Data yang Dibaca</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-konfigurasi">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-pertama-k-means-tanpa-pca">5. Jalur Pertama: k-Means Tanpa PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-atas">5.1 k-Means Bagian Atas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-kedua-pca">6. Jalur Kedua: PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-principal-component-analysis">6.1 PCA (Principal Component Analysis)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-pca">Tujuan PCA</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">7. Table View</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fungsi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-yang-dapat-diamati">Informasi yang Dapat Diamati</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-penggunaan">Cara Penggunaan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-dengan-pca">8. k-Means dengan PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means">8.1 k-Means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-dua-jalur-clustering">9. Perbedaan Dua Jalur Clustering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-workflow">10. Perbandingan Workflow</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-1-data-asli">Pendekatan 1 — Data Asli</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-2-data-hasil-pca">Pendekatan 2 — Data Hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">11. Interpretasi Hasil</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kelebihan-workflow">12. Kelebihan Workflow</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-data-asli-dan-data-hasil-pca">1. Membandingkan data asli dan data hasil PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menguji-pengaruh-pca">2. Menguji pengaruh PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-jumlah-cluster">3. Membandingkan jumlah cluster</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memeriksa-hasil-pca">4. Memeriksa hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hal-yang-perlu-diperhatikan">13. Hal yang Perlu Diperhatikan</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-konfigurasi-node">14. Ringkasan Konfigurasi Node</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-dan-pengelompokan-data-kualitas-udara-menggunakan-pca-dan-k-means-pada-knime">
+<h1>Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME<a class="headerlink" href="#analisis-dan-pengelompokan-data-kualitas-udara-menggunakan-pca-dan-k-means-pada-knime" title="Permalink to this heading">#</a></h1>
+<section id="analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime">
+<h2>Analisis Data Fitur TSFEL Menggunakan PCA dan K-Means pada KNIME<a class="headerlink" href="#analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime" title="Permalink to this heading">#</a></h2>
+</section>
+<hr class="docutils" />
+<section id="tujuan">
+<h2>1. Tujuan<a class="headerlink" href="#tujuan" title="Permalink to this heading">#</a></h2>
+<p>Workflow ini digunakan untuk melakukan analisis pengelompokan (<em>clustering</em>) terhadap data fitur TSFEL dari data kualitas udara.</p>
+<p>Pada workflow, terdapat <strong>dua jalur clustering</strong> yang berbeda:</p>
+<p><img alt="workflow" src="_images/workflow.png" /></p>
+<ol class="arabic simple">
+<li><p><strong>Jalur pertama:</strong> data dari Excel Reader langsung diproses menggunakan k-Means dengan <strong>3 cluster</strong>, tanpa PCA.</p></li>
+<li><p><strong>Jalur kedua:</strong> data dari Excel Reader diproses terlebih dahulu menggunakan PCA hingga menjadi <strong>19 dimensi</strong>, kemudian hasil PCA diproses menggunakan k-Means dengan <strong>5 cluster</strong>.</p></li>
+</ol>
+<p>Dengan struktur tersebut, workflow dapat digunakan untuk melihat perbedaan hasil clustering antara:</p>
+<ul class="simple">
+<li><p><strong>data fitur asli</strong>, dan</p></li>
+<li><p><strong>data yang telah direduksi menggunakan PCA</strong>.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="data-yang-digunakan">
+<h1>2. Data yang Digunakan<a class="headerlink" href="#data-yang-digunakan" title="Permalink to this heading">#</a></h1>
+<p>Data berasal dari file Excel:</p>
+<p><a class="reference download internal" download="" href="_downloads/be5d637357af3107a2d4cbec70b5d975/data_tsfel_20260920_080900.xlsx"><span class="xref download myst">data_tsfel_20260920_080900.xlsx</span></a></p>
+<p>Sheet yang digunakan:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Semua Fitur
+</pre></div>
+</div>
+<p>Berdasarkan pemeriksaan data Excel, diperoleh:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Keterangan</p></th>
+<th class="head text-right"><p>Jumlah</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Jumlah baris/data</p></td>
+<td class="text-right"><p>19</p></td>
+</tr>
+<tr class="row-odd"><td><p>Jumlah seluruh kolom</p></td>
+<td class="text-right"><p>274</p></td>
+</tr>
+<tr class="row-even"><td><p>Kolom identitas</p></td>
+<td class="text-right"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Jumlah fitur TSFEL</p></td>
+<td class="text-right"><p>272</p></td>
+</tr>
+<tr class="row-even"><td><p>Fitur CO</p></td>
+<td class="text-right"><p>68</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fitur SO2</p></td>
+<td class="text-right"><p>68</p></td>
+</tr>
+<tr class="row-even"><td><p>Fitur CH4</p></td>
+<td class="text-right"><p>68</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fitur NO2</p></td>
+<td class="text-right"><p>68</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Dua kolom identitas adalah:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Nama</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Daerah</span></code></p></li>
+</ul>
+<p>Sementara itu, terdapat 272 fitur TSFEL yang terdiri dari:</p>
+<ul class="simple">
+<li><p>68 fitur CO</p></li>
+<li><p>68 fitur SO2</p></li>
+<li><p>68 fitur CH4</p></li>
+<li><p>68 fitur NO2</p></li>
+</ul>
+<p>Perhitungannya:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>68 × 4 = 272 fitur TSFEL
+</pre></div>
+</div>
+<p>Sehingga struktur data secara umum adalah:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>19 data
+   │
+   ├── Nama
+   ├── Daerah
+   │
+   └── 272 fitur TSFEL
+        ├── 68 fitur CO
+        ├── 68 fitur SO2
+        ├── 68 fitur CH4
+        └── 68 fitur NO2
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="gambaran-workflow">
+<h1>3. Gambaran Workflow<a class="headerlink" href="#gambaran-workflow" title="Permalink to this heading">#</a></h1>
+<p>Workflow terdiri dari lima node utama:</p>
+<p><img alt="workflow" src="_images/workflow.png" /></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="penjelasan-setiap-node">
+<h1>4. Penjelasan Setiap Node<a class="headerlink" href="#penjelasan-setiap-node" title="Permalink to this heading">#</a></h1>
+<section id="excel-reader">
+<h2>4.1 Excel Reader<a class="headerlink" href="#excel-reader" title="Permalink to this heading">#</a></h2>
+<section id="fungsi">
+<h3>Fungsi<a class="headerlink" href="#fungsi" title="Permalink to this heading">#</a></h3>
+<p><strong>Excel Reader</strong> merupakan node pertama yang digunakan untuk membaca data dari file Excel.</p>
+<p><img alt="Excel Reade" src="_images/excel-raider.png" /></p>
+<p>Node ini menjadi sumber data bagi dua jalur analisis.
+Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
+</section>
+<section id="data-yang-dibaca">
+<h3>Data yang Dibaca<a class="headerlink" href="#data-yang-dibaca" title="Permalink to this heading">#</a></h3>
+<p>File:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>data_tsfel_20260920_080900.xlsx
+</pre></div>
+</div>
+<p>Sheet:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Semua Fitur
+</pre></div>
+</div>
+<p>Data terdiri dari:</p>
+<ul class="simple">
+<li><p>19 baris</p></li>
+<li><p>274 kolom</p></li>
+<li><p>2 kolom identitas</p></li>
+<li><p>272 fitur TSFEL</p></li>
+</ul>
+</section>
+<section id="cara-konfigurasi">
+<h3>Cara Konfigurasi<a class="headerlink" href="#cara-konfigurasi" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Masukkan node <strong>Excel Reader</strong> ke workflow.</p></li>
+<li><p>Klik dua kali node tersebut.</p></li>
+<li><p>Pilih file Excel.</p></li>
+<li><p>Pilih sheet <strong><code class="docutils literal notranslate"><span class="pre">Semua</span> <span class="pre">Fitur</span></code></strong>.</p></li>
+<li><p>Periksa tipe data setiap kolom.</p></li>
+<li><p>Klik <strong>Apply</strong>.</p></li>
+<li><p>Klik <strong>Execute</strong>.</p></li>
+</ol>
+</section>
+<section id="hasil">
+<h3>Hasil<a class="headerlink" href="#hasil" title="Permalink to this heading">#</a></h3>
+<p>Setelah dijalankan, Excel Reader menghasilkan tabel yang dapat diteruskan langsung ke k-Means dan juga ke PCA.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="jalur-pertama-k-means-tanpa-pca">
+<h1>5. Jalur Pertama: k-Means Tanpa PCA<a class="headerlink" href="#jalur-pertama-k-means-tanpa-pca" title="Permalink to this heading">#</a></h1>
+<section id="k-means-bagian-atas">
+<h2>5.1 k-Means Bagian Atas<a class="headerlink" href="#k-means-bagian-atas" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Fungsi<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Node k-Means bagian atas melakukan <strong>clustering langsung terhadap data dari Excel Reader</strong>.</p>
+<p>Node ini <strong>tidak melewati PCA</strong>.</p>
+</section>
+<section id="konfigurasi">
+<h3>Konfigurasi<a class="headerlink" href="#konfigurasi" title="Permalink to this heading">#</a></h3>
+<p>Pada k-Means ini digunakan:</p>
+<p><img alt="K-Means" src="_images/k-means3.png" /></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 3
+</pre></div>
+</div>
+<p>Dengan demikian, data dikelompokkan menjadi tiga cluster.</p>
+</section>
+<section id="id2">
+<h3>Cara Konfigurasi<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Hubungkan output <strong>Excel Reader</strong> langsung ke k-Means bagian atas.</p></li>
+<li><p>Buka konfigurasi k-Means.</p></li>
+<li><p>Atur:</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 3
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Tentukan kolom numerik yang digunakan sebagai variabel clustering.</p></li>
+<li><p>Jalankan node dengan <strong>Execute</strong>.</p></li>
+</ol>
+</section>
+<section id="id3">
+<h3>Hasil<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>Setiap data akan memperoleh label cluster berdasarkan kemiripan pada data fitur yang digunakan.</p>
+<p><img alt="K-Means" src="_images/k-means3.png" /></p>
+<p>Karena proses PCA tidak dilakukan, clustering pada jalur ini menggunakan <strong>data fitur sebelum reduksi PCA</strong>.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="jalur-kedua-pca">
+<h1>6. Jalur Kedua: PCA<a class="headerlink" href="#jalur-kedua-pca" title="Permalink to this heading">#</a></h1>
+<section id="pca-principal-component-analysis">
+<h2>6.1 PCA (Principal Component Analysis)<a class="headerlink" href="#pca-principal-component-analysis" title="Permalink to this heading">#</a></h2>
+<section id="id4">
+<h3>Fungsi<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>PCA digunakan untuk melakukan <strong>reduksi dimensi</strong> terhadap fitur TSFEL.</p>
+<p>Data awal memiliki:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>272 fitur TSFEL
+</pre></div>
+</div>
+<p>Pada workflow ini, PCA dikonfigurasi dengan:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Dimension(s) to reduce to = 19
+</pre></div>
+</div>
+<p>Sehingga alurnya:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>272 fitur TSFEL
+       ↓
+      PCA
+       ↓
+19 dimensi
+</pre></div>
+</div>
+<p><img alt="PCA" src="_images/pca.png" /></p>
+</section>
+<section id="id5">
+<h3>Cara Konfigurasi<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Hubungkan output Excel Reader ke PCA.</p></li>
+<li><p>Buka konfigurasi PCA.</p></li>
+<li><p>Atur:</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Dimension(s) to reduce to = 19
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Pastikan kolom identitas tidak digunakan sebagai variabel numerik PCA.</p></li>
+<li><p>Klik <strong>Apply</strong>.</p></li>
+<li><p>Klik <strong>Execute</strong>.</p></li>
+</ol>
+</section>
+<section id="tujuan-pca">
+<h3>Tujuan PCA<a class="headerlink" href="#tujuan-pca" title="Permalink to this heading">#</a></h3>
+<p>PCA digunakan untuk:</p>
+<ul class="simple">
+<li><p>Mengurangi jumlah dimensi data.</p></li>
+<li><p>Menyederhanakan representasi data.</p></li>
+<li><p>Mengurangi jumlah variabel yang diproses dalam clustering.</p></li>
+<li><p>Membentuk komponen baru yang mewakili variasi data.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="table-view">
+<h1>7. Table View<a class="headerlink" href="#table-view" title="Permalink to this heading">#</a></h1>
+<section id="id6">
+<h2>Fungsi<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p><strong>Table View</strong> digunakan untuk melihat hasil data setelah proses PCA.</p>
+<p>Node ini tidak melakukan clustering.</p>
+<p>Table View hanya digunakan untuk memeriksa hasil transformasi data.</p>
+</section>
+<section id="informasi-yang-dapat-diamati">
+<h2>Informasi yang Dapat Diamati<a class="headerlink" href="#informasi-yang-dapat-diamati" title="Permalink to this heading">#</a></h2>
+<p>Melalui Table View, hasil PCA dapat diperiksa dalam bentuk tabel, misalnya:</p>
+<ul class="simple">
+<li><p>baris data</p></li>
+<li><p>komponen hasil PCA</p></li>
+<li><p>nilai masing-masing komponen</p></li>
+<li><p>informasi identitas yang diteruskan oleh workflow</p></li>
+</ul>
+<p><img alt="Table View" src="_images/table-view.png" /></p>
+</section>
+<section id="cara-penggunaan">
+<h2>Cara Penggunaan<a class="headerlink" href="#cara-penggunaan" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Hubungkan output PCA ke Table View.</p></li>
+<li><p>Jalankan PCA.</p></li>
+<li><p>Buka Table View.</p></li>
+<li><p>Periksa hasil reduksi dimensi.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="k-means-dengan-pca">
+<h1>8. k-Means dengan PCA<a class="headerlink" href="#k-means-dengan-pca" title="Permalink to this heading">#</a></h1>
+<section id="k-means">
+<h2>8.1 k-Means<a class="headerlink" href="#k-means" title="Permalink to this heading">#</a></h2>
+<section id="id7">
+<h3>Fungsi<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<p>Node k-Means bagian bawah melakukan clustering terhadap <strong>hasil PCA</strong>.</p>
+<p>Berbeda dengan k-Means bagian atas, node ini menerima data setelah proses reduksi dimensi.</p>
+</section>
+<section id="id8">
+<h3>Konfigurasi<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<p>Pada k-Means bagian bawah digunakan:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 5
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>Cara Konfigurasi<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Hubungkan output PCA ke k-Means bagian bawah.</p></li>
+<li><p>Buka konfigurasi k-Means.</p></li>
+<li><p>Atur:</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 5
+</pre></div>
+</div>
+<p><img alt="K-Means" src="_images/k-means5.png" /></p>
+<ol class="arabic simple" start="4">
+<li><p>Tentukan variabel numerik hasil PCA sebagai variabel clustering.</p></li>
+<li><p>Jalankan node.</p></li>
+</ol>
+</section>
+<section id="id10">
+<h3>Hasil<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<p>Data dikelompokkan menjadi lima cluster:</p>
+<p><img alt="K-Means" src="_images/hasil_k-means5.png" /></p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="perbedaan-dua-jalur-clustering">
+<h1>9. Perbedaan Dua Jalur Clustering<a class="headerlink" href="#perbedaan-dua-jalur-clustering" title="Permalink to this heading">#</a></h1>
+<p>Ini merupakan bagian utama dari workflow terbaru.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Aspek</p></th>
+<th class="head"><p>k-Means Atas</p></th>
+<th class="head"><p>k-Means Bawah</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sumber data</p></td>
+<td><p>Excel Reader</p></td>
+<td><p>Output PCA</p></td>
+</tr>
+<tr class="row-odd"><td><p>Melalui PCA</p></td>
+<td><p>Tidak</p></td>
+<td><p>Ya</p></td>
+</tr>
+<tr class="row-even"><td><p>Jumlah dimensi</p></td>
+<td><p>Data fitur asli</p></td>
+<td><p>19 dimensi</p></td>
+</tr>
+<tr class="row-odd"><td><p>Jumlah cluster</p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-even"><td><p>Tujuan</p></td>
+<td><p>Clustering data asli</p></td>
+<td><p>Clustering data setelah reduksi</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="perbandingan-workflow">
+<h1>10. Perbandingan Workflow<a class="headerlink" href="#perbandingan-workflow" title="Permalink to this heading">#</a></h1>
+<p>Workflow ini memungkinkan dilakukan perbandingan berdasarkan dua pendekatan.</p>
+<section id="pendekatan-1-data-asli">
+<h2>Pendekatan 1 — Data Asli<a class="headerlink" href="#pendekatan-1-data-asli" title="Permalink to this heading">#</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Excel
+  ↓
+Fitur TSFEL
+  ↓
+k-Means
+  ↓
+3 Cluster
+</pre></div>
+</div>
+<p>Pada pendekatan ini, proses clustering dilakukan tanpa reduksi dimensi PCA.</p>
+</section>
+<section id="pendekatan-2-data-hasil-pca">
+<h2>Pendekatan 2 — Data Hasil PCA<a class="headerlink" href="#pendekatan-2-data-hasil-pca" title="Permalink to this heading">#</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Excel
+  ↓
+Fitur TSFEL
+  ↓
+PCA
+  ↓
+19 Dimensi
+  ↓
+k-Means
+  ↓
+5 Cluster
+</pre></div>
+</div>
+<p>Pada pendekatan ini, clustering dilakukan setelah data direduksi menjadi 19 dimensi.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="interpretasi-hasil">
+<h1>11. Interpretasi Hasil<a class="headerlink" href="#interpretasi-hasil" title="Permalink to this heading">#</a></h1>
+<p>Hasil k-Means dari kedua jalur dapat digunakan untuk melihat perbedaan pengelompokan data.</p>
+<p>Pada jalur pertama:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>k = 3
+</pre></div>
+</div>
+<p>data dibagi menjadi tiga cluster berdasarkan fitur yang digunakan dari data Excel.</p>
+<p>Pada jalur kedua:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>k = 5
+</pre></div>
+</div>
+<p>data dibagi menjadi lima cluster berdasarkan komponen hasil PCA.</p>
+<hr class="docutils" />
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="kelebihan-workflow">
+<h1>12. Kelebihan Workflow<a class="headerlink" href="#kelebihan-workflow" title="Permalink to this heading">#</a></h1>
+<p>Workflow ini memiliki beberapa kegunaan:</p>
+<section id="membandingkan-data-asli-dan-data-hasil-pca">
+<h2>1. Membandingkan data asli dan data hasil PCA<a class="headerlink" href="#membandingkan-data-asli-dan-data-hasil-pca" title="Permalink to this heading">#</a></h2>
+<p>Karena terdapat dua jalur clustering, hasil pengelompokan dapat dibandingkan antara data asli dan data setelah reduksi dimensi.</p>
+</section>
+<section id="menguji-pengaruh-pca">
+<h2>2. Menguji pengaruh PCA<a class="headerlink" href="#menguji-pengaruh-pca" title="Permalink to this heading">#</a></h2>
+<p>PCA dapat mengubah representasi data sebelum digunakan dalam clustering. Workflow ini menyediakan jalur untuk melihat hasil clustering setelah PCA.</p>
+</section>
+<section id="membandingkan-jumlah-cluster">
+<h2>3. Membandingkan jumlah cluster<a class="headerlink" href="#membandingkan-jumlah-cluster" title="Permalink to this heading">#</a></h2>
+<p>Jumlah cluster juga berbeda:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>k = 3
+</pre></div>
+</div>
+<p>dan</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>k = 5
+</pre></div>
+</div>
+<p>Sehingga hasil pengelompokan memiliki struktur yang berbeda.</p>
+</section>
+<section id="memeriksa-hasil-pca">
+<h2>4. Memeriksa hasil PCA<a class="headerlink" href="#memeriksa-hasil-pca" title="Permalink to this heading">#</a></h2>
+<p>Table View membantu melihat data setelah PCA sebelum digunakan dalam proses clustering.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="hal-yang-perlu-diperhatikan">
+<h1>13. Hal yang Perlu Diperhatikan<a class="headerlink" href="#hal-yang-perlu-diperhatikan" title="Permalink to this heading">#</a></h1>
+<p>Ada dua perbedaan sekaligus antara kedua hasil k-Means:</p>
+<ol class="arabic simple">
+<li><p><strong>Input datanya berbeda</strong></p>
+<ul class="simple">
+<li><p>k-Means atas menggunakan data langsung dari Excel.</p></li>
+<li><p>k-Means bawah menggunakan hasil PCA.</p></li>
+</ul>
+</li>
+<li><p><strong>Jumlah cluster berbeda</strong></p>
+<ul class="simple">
+<li><p>k-Means atas menggunakan k = 3.</p></li>
+<li><p>k-Means bawah menggunakan k = 5.</p></li>
+</ul>
+</li>
+</ol>
+<p>Oleh karena itu, perbedaan hasil clustering tidak hanya disebabkan oleh PCA, tetapi juga karena jumlah cluster yang digunakan berbeda.</p>
+<p>Jika tujuan analisis adalah <strong>secara khusus mengukur pengaruh PCA</strong>, perbandingan yang lebih terkontrol adalah menggunakan jumlah cluster yang sama pada kedua jalur, misalnya:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Data asli → k-Means k=3
+Data PCA  → k-Means k=3
+</pre></div>
+</div>
+<p>Namun, jika tujuan tugas memang menggunakan:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Tanpa PCA → k=3
+Dengan PCA → k=5
+</pre></div>
+</div>
+<p>maka konfigurasi workflow pada gambar sudah mengikuti struktur tersebut.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="ringkasan-konfigurasi-node">
+<h1>14. Ringkasan Konfigurasi Node<a class="headerlink" href="#ringkasan-konfigurasi-node" title="Permalink to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-right"><p>No.</p></th>
+<th class="head"><p>Node</p></th>
+<th class="head"><p>Input</p></th>
+<th class="head"><p>Fungsi</p></th>
+<th class="head"><p>Konfigurasi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p>1</p></td>
+<td><p>Excel Reader</p></td>
+<td><p>File Excel</p></td>
+<td><p>Membaca data</p></td>
+<td><p>Sheet <code class="docutils literal notranslate"><span class="pre">Semua</span> <span class="pre">Fitur</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>2</p></td>
+<td><p>k-Means atas</p></td>
+<td><p>Excel Reader</p></td>
+<td><p>Clustering data asli</p></td>
+<td><p><strong>k = 3</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>3</p></td>
+<td><p>PCA</p></td>
+<td><p>Excel Reader</p></td>
+<td><p>Reduksi dimensi</p></td>
+<td><p><strong>Reduce to = 19</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>4</p></td>
+<td><p>Table View</p></td>
+<td><p>PCA</p></td>
+<td><p>Melihat hasil PCA</p></td>
+<td><p>Tampilan tabel</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>5</p></td>
+<td><p>k-Means bawah</p></td>
+<td><p>PCA</p></td>
+<td><p>Clustering data hasil PCA</p></td>
+<td><p><strong>k = 5</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime">Analisis Data Fitur TSFEL Menggunakan PCA dan K-Means pada KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">1. Tujuan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-digunakan">2. Data yang Digunakan</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">3. Gambaran Workflow</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-setiap-node">4. Penjelasan Setiap Node</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">4.1 Excel Reader</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dibaca">Data yang Dibaca</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-konfigurasi">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-pertama-k-means-tanpa-pca">5. Jalur Pertama: k-Means Tanpa PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-atas">5.1 k-Means Bagian Atas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-kedua-pca">6. Jalur Kedua: PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-principal-component-analysis">6.1 PCA (Principal Component Analysis)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-pca">Tujuan PCA</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">7. Table View</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fungsi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-yang-dapat-diamati">Informasi yang Dapat Diamati</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-penggunaan">Cara Penggunaan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-dengan-pca">8. k-Means dengan PCA</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means">8.1 k-Means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Cara Konfigurasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-dua-jalur-clustering">9. Perbedaan Dua Jalur Clustering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-workflow">10. Perbandingan Workflow</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-1-data-asli">Pendekatan 1 — Data Asli</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-2-data-hasil-pca">Pendekatan 2 — Data Hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">11. Interpretasi Hasil</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kelebihan-workflow">12. Kelebihan Workflow</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-data-asli-dan-data-hasil-pca">1. Membandingkan data asli dan data hasil PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menguji-pengaruh-pca">2. Menguji pengaruh PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-jumlah-cluster">3. Membandingkan jumlah cluster</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memeriksa-hasil-pca">4. Memeriksa hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hal-yang-perlu-diperhatikan">13. Hal yang Perlu Diperhatikan</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-konfigurasi-node">14. Ringkasan Konfigurasi Node</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mohammad Waqidi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
