@@ -1,0 +1,1478 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Klasifikasi Sawah dan Bukan Sawah dengan Random Forest &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Machine_Learning_Lenteng';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Pertemuan_5" href="pertemuan_5.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/foto.jpeg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/foto.jpeg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Mohammad Waqidi
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_1.html">Pertemuan_1</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="kualitas_udara.html">Mengamati Kualitas Udara Sumenep</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_2.html">Pertemuan_2</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="statistik_kualitas_udara.html">Integrasi Data Cloud (Aiven) &amp; Analisis Statistik Data Kualitas Udara (KNIME)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_3.html">Pertemuan_3</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="TSFEL_Penjelasan_dan_Contoh.html">Penjelasan Domain TSFEL &amp; TSFEL vs Python Manual</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="CO_lenteng_68_Fitur_TSFEL.html">Ekstraksi 68 Fitur TSFEL pada Data CO Lenteng</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_4.html">Pertemuan_4</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="clustering_272-TSFEL.html">Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pertemuan_5.html">Pertemuan_5</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Klasifikasi Sawah dan Bukan Sawah dengan Random Forest</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FMachine_Learning_Lenteng.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Machine_Learning_Lenteng.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Klasifikasi Sawah dan Bukan Sawah dengan Random Forest</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalasi-dan-import-library">1. Instalasi dan import library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-data">2. Membaca data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-nilai-spektral-untuk-training">3. Ekstraksi nilai spektral untuk training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-dan-melatih-random-forest">4. Membagi data dan melatih Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-hasil">5. Evaluasi hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-peta-klasifikasi-seluruh-citra">8. Membuat peta klasifikasi seluruh citra</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-peta-klasifikasi-ke-geotiff">7. Menyimpan peta klasifikasi ke GeoTIFF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-interpretasi">8. Catatan interpretasi</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="klasifikasi-sawah-dan-bukan-sawah-dengan-random-forest">
+<h1>Klasifikasi Sawah dan Bukan Sawah dengan Random Forest<a class="headerlink" href="#klasifikasi-sawah-dan-bukan-sawah-dengan-random-forest" title="Permalink to this heading">#</a></h1>
+<p>Notebook ini mengikuti alur utama <a class="reference external" href="https://github.com/yotarazona/scikit-eo/blob/main/examples/notebooks/01.%20Machine_Learning.ipynb"><code class="docutils literal notranslate"><span class="pre">01.</span> <span class="pre">Machine_Learning.ipynb</span></code></a> dari scikit-eo: membaca citra, menyiapkan sampel berlabel, melatih Random Forest, mengevaluasi hasil, membuat peta klasifikasi, dan menyimpan raster hasil. Data citra Sentinel-2 (band B01–B04) dan poligon GeoJSON yang digunakan mengambil lokasi di Lenteng, Kabupaten Sumenep.</p>
+<section id="instalasi-dan-import-library">
+<h2>1. Instalasi dan import library<a class="headerlink" href="#instalasi-dan-import-library" title="Permalink to this heading">#</a></h2>
+<p>Jalankan instalasi bila library belum tersedia. Disarankan memakai Google Colab atau environment Python dengan GDAL/rasterio yang sudah terpasang.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install rasterio geopandas shapely scikit-learn matplotlib pandas
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: rasterio in /usr/local/lib/python3.13/dist-packages (1.5.1)
+Requirement already satisfied: geopandas in /usr/local/lib/python3.13/dist-packages (1.1.4)
+Requirement already satisfied: shapely in /usr/local/lib/python3.13/dist-packages (2.1.2)
+Requirement already satisfied: scikit-learn in /usr/local/lib/python3.13/dist-packages (1.6.1)
+Requirement already satisfied: matplotlib in /usr/local/lib/python3.13/dist-packages (3.10.0)
+Requirement already satisfied: pandas in /usr/local/lib/python3.13/dist-packages (2.2.3)
+Requirement already satisfied: affine in /usr/local/lib/python3.13/dist-packages (from rasterio) (3.0.1)
+Requirement already satisfied: attrs in /usr/local/lib/python3.13/dist-packages (from rasterio) (26.1.0)
+Requirement already satisfied: certifi in /usr/local/lib/python3.13/dist-packages (from rasterio) (2026.7.22)
+Requirement already satisfied: click!=8.2.*,&gt;=4.0 in /usr/local/lib/python3.13/dist-packages (from rasterio) (8.5.0)
+Requirement already satisfied: numpy&gt;=2 in /usr/local/lib/python3.13/dist-packages (from rasterio) (2.1.3)
+Requirement already satisfied: pyparsing&gt;=3.0 in /usr/local/lib/python3.13/dist-packages (from rasterio) (3.3.2)
+Requirement already satisfied: pyogrio&gt;=0.7.2 in /usr/local/lib/python3.13/dist-packages (from geopandas) (0.13.0)
+Requirement already satisfied: packaging in /usr/local/lib/python3.13/dist-packages (from geopandas) (26.3)
+Requirement already satisfied: pyproj&gt;=3.5.0 in /usr/local/lib/python3.13/dist-packages (from geopandas) (3.8.0)
+Requirement already satisfied: scipy&gt;=1.6.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn) (1.16.3)
+Requirement already satisfied: joblib&gt;=1.2.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn) (1.6.0)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn) (3.7.0)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (1.4.0)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (4.65.0)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (1.5.1)
+Requirement already satisfied: pillow&gt;=8 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (11.3.0)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /usr/local/lib/python3.13/dist-packages (from matplotlib) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.13/dist-packages (from pandas) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in /usr/local/lib/python3.13/dist-packages (from pandas) (2026.4)
+Requirement already satisfied: cloudpickle&gt;=3.0 in /usr/local/lib/python3.13/dist-packages (from joblib&gt;=1.2.0-&gt;scikit-learn) (3.1.2)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.13/dist-packages (from python-dateutil&gt;=2.7-&gt;matplotlib) (1.17.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">zipfile</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rasterio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rasterio.features</span><span class="w"> </span><span class="kn">import</span> <span class="n">geometry_mask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">shape</span><span class="p">,</span> <span class="n">mapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_valid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">cohen_kappa_score</span><span class="p">,</span> <span class="n">ConfusionMatrixDisplay</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membaca-data">
+<h2>2. Membaca data<a class="headerlink" href="#membaca-data" title="Permalink to this heading">#</a></h2>
+<p>Unggah <code class="docutils literal notranslate"><span class="pre">lenteng.zip</span></code> dan <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">mentah.geojson</span></code> ke folder kerja notebook, atau ubah variabel path sesuai lokasi file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">files</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">uploaded</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">upload</span><span class="p">()</span>
+
+<span class="n">zip_path</span> <span class="o">=</span> <span class="s2">&quot;lenteng.zip&quot;</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;lenteng_data&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File berhasil diekstrak:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+     <input type="file" id="files-194e1411-5286-4bba-9b9e-1b09af66633b" name="files[]" multiple disabled
+        style="border:none" />
+     <output id="result-194e1411-5286-4bba-9b9e-1b09af66633b">
+      Upload widget is only available when the cell has been executed in the
+      current browser session. Please rerun this cell to enable.
+      </output>
+      <script>// Copyright 2017 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * @fileoverview Helpers for google.colab Python module.
+ */
+(function(scope) {
+function span(text, styleAttributes = {}) {
+  const element = document.createElement('span');
+  element.textContent = text;
+  for (const key of Object.keys(styleAttributes)) {
+    element.style[key] = styleAttributes[key];
+  }
+  return element;
+}
+
+// Max number of bytes which will be uploaded at a time.
+const MAX_PAYLOAD_SIZE = 100 * 1024;
+
+function _uploadFiles(inputId, outputId) {
+  const steps = uploadFilesStep(inputId, outputId);
+  const outputElement = document.getElementById(outputId);
+  // Cache steps on the outputElement to make it available for the next call
+  // to uploadFilesContinue from Python.
+  outputElement.steps = steps;
+
+  return _uploadFilesContinue(outputId);
+}
+
+// This is roughly an async generator (not supported in the browser yet),
+// where there are multiple asynchronous steps and the Python side is going
+// to poll for completion of each step.
+// This uses a Promise to block the python side on completion of each step,
+// then passes the result of the previous step as the input to the next step.
+function _uploadFilesContinue(outputId) {
+  const outputElement = document.getElementById(outputId);
+  const steps = outputElement.steps;
+
+  const next = steps.next(outputElement.lastPromiseValue);
+  return Promise.resolve(next.value.promise).then((value) => {
+    // Cache the last promise value to make it available to the next
+    // step of the generator.
+    outputElement.lastPromiseValue = value;
+    return next.value.response;
+  });
+}
+
+/**
+ * Generator function which is called between each async step of the upload
+ * process.
+ * @param {string} inputId Element ID of the input file picker element.
+ * @param {string} outputId Element ID of the output display.
+ * @return {!Iterable<!Object>} Iterable of next steps.
+ */
+function* uploadFilesStep(inputId, outputId) {
+  const inputElement = document.getElementById(inputId);
+  inputElement.disabled = false;
+
+  const outputElement = document.getElementById(outputId);
+  outputElement.innerHTML = '';
+
+  const pickedPromise = new Promise((resolve) => {
+    inputElement.addEventListener('change', (e) => {
+      resolve(e.target.files);
+    });
+  });
+
+  const cancel = document.createElement('button');
+  inputElement.parentElement.appendChild(cancel);
+  cancel.textContent = 'Cancel upload';
+  const cancelPromise = new Promise((resolve) => {
+    cancel.onclick = () => {
+      resolve(null);
+    };
+  });
+
+  // Wait for the user to pick the files.
+  const files = yield {
+    promise: Promise.race([pickedPromise, cancelPromise]),
+    response: {
+      action: 'starting',
+    }
+  };
+
+  cancel.remove();
+
+  // Disable the input element since further picks are not allowed.
+  inputElement.disabled = true;
+
+  if (!files) {
+    return {
+      response: {
+        action: 'complete',
+      }
+    };
+  }
+
+  for (const file of files) {
+    const li = document.createElement('li');
+    li.append(span(file.name, {fontWeight: 'bold'}));
+    li.append(span(
+        `(${file.type || 'n/a'}) - ${file.size} bytes, ` +
+        `last modified: ${
+            file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() :
+                                    'n/a'} - `));
+    const percent = span('0% done');
+    li.appendChild(percent);
+
+    outputElement.appendChild(li);
+
+    const fileDataPromise = new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        resolve(e.target.result);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+    // Wait for the data to be ready.
+    let fileData = yield {
+      promise: fileDataPromise,
+      response: {
+        action: 'continue',
+      }
+    };
+
+    // Use a chunked sending to avoid message size limits. See b/62115660.
+    let position = 0;
+    do {
+      const length = Math.min(fileData.byteLength - position, MAX_PAYLOAD_SIZE);
+      const chunk = new Uint8Array(fileData, position, length);
+      position += length;
+
+      const base64 = btoa(String.fromCharCode.apply(null, chunk));
+      yield {
+        response: {
+          action: 'append',
+          file: file.name,
+          data: base64,
+        },
+      };
+
+      let percentDone = fileData.byteLength === 0 ?
+          100 :
+          Math.round((position / fileData.byteLength) * 100);
+      percent.textContent = `${percentDone}% done`;
+
+    } while (position < fileData.byteLength);
+  }
+
+  // All done.
+  yield {
+    response: {
+      action: 'complete',
+    }
+  };
+}
+
+scope.google = scope.google || {};
+scope.google.colab = scope.google.colab || {};
+scope.google.colab._files = {
+  _uploadFiles,
+  _uploadFilesContinue,
+};
+})(self);
+</script> </div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving lenteng.zip to lenteng.zip
+File berhasil diekstrak:
+2026-10-01-00_00_2026-10-01-23_59_Sentinel-2_L2A_B01_(Raw).tiff
+2026-10-01-00_00_2026-10-01-23_59_Sentinel-2_L2A_B02_(Raw).tiff
+2026-10-01-00_00_2026-10-01-23_59_Sentinel-2_L2A_True_color.tiff
+2026-10-01-00_00_2026-10-01-23_59_Sentinel-2_L2A_B03_(Raw).tiff
+2026-10-01-00_00_2026-10-01-23_59_Sentinel-2_L2A_B04_(Raw).tiff
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">band_files</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;B01&quot;</span><span class="p">,</span> <span class="s2">&quot;B02&quot;</span><span class="p">,</span> <span class="s2">&quot;B03&quot;</span><span class="p">,</span> <span class="s2">&quot;B04&quot;</span><span class="p">]:</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">band</span> <span class="ow">in</span> <span class="n">f</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.tif&quot;</span><span class="p">,</span> <span class="s2">&quot;.tiff&quot;</span><span class="p">))]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">matches</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raster untuk </span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s2"> tidak ditemukan&quot;</span><span class="p">)</span>
+    <span class="n">band_files</span><span class="p">[</span><span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">band_files</span><span class="p">[</span><span class="s2">&quot;B01&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">transform</span>
+    <span class="n">crs</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">crs</span>
+    <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">width</span>
+    <span class="n">bounds</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">bounds</span>
+
+<span class="n">arrays</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;B01&quot;</span><span class="p">,</span> <span class="s2">&quot;B02&quot;</span><span class="p">,</span> <span class="s2">&quot;B03&quot;</span><span class="p">,</span> <span class="s2">&quot;B04&quot;</span><span class="p">]:</span>
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">band_files</span><span class="p">[</span><span class="n">band</span><span class="p">])</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span> <span class="o">!=</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">crs</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raster </span><span class="si">{</span><span class="n">band</span><span class="si">}</span><span class="s2"> tidak sejajar dengan B01&quot;</span><span class="p">)</span>
+        <span class="n">arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">))</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">arrays</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ukuran citra (baris, kolom, band):&quot;</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CRS:&quot;</span><span class="p">,</span> <span class="n">crs</span><span class="p">,</span> <span class="s2">&quot;Bounds:&quot;</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ukuran citra (baris, kolom, band): (424, 565, 4)
+CRS: EPSG:4326 Bounds: BoundingBox(left=113.746777, bottom=-7.080962, right=113.8484, top=-7.005149)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">files</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">shape</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_valid</span>
+
+<span class="n">uploaded</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">upload</span><span class="p">()</span>
+
+<span class="n">geojson_path</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">uploaded</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File GeoJSON yang digunakan:&quot;</span><span class="p">,</span> <span class="n">geojson_path</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">geojson_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">geojson</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">geojson</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;features&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+    <span class="n">geom_data</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;geometry&quot;</span><span class="p">)</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;properties&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="ow">or</span> <span class="p">{}</span>
+
+    <span class="n">label</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">geom_data</span> <span class="ow">or</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;sawah&quot;</span><span class="p">,</span> <span class="s2">&quot;bukan sawah&quot;</span><span class="p">]:</span>
+        <span class="k">continue</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">geom</span> <span class="o">=</span> <span class="n">shape</span><span class="p">(</span><span class="n">geom_data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">geom</span><span class="o">.</span><span class="n">is_valid</span><span class="p">:</span>
+            <span class="n">geom</span> <span class="o">=</span> <span class="n">make_valid</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">is_empty</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">geom</span><span class="o">.</span><span class="n">is_valid</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">geom_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;MultiPolygon&quot;</span><span class="p">]:</span>
+            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">geom</span><span class="p">,</span>
+                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">label</span>
+            <span class="p">})</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Geometri dilewati:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah poligon yang dapat digunakan:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah masing-masing kelas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">features</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+     <input type="file" id="files-12352027-0273-4e01-babb-1890e7d400a4" name="files[]" multiple disabled
+        style="border:none" />
+     <output id="result-12352027-0273-4e01-babb-1890e7d400a4">
+      Upload widget is only available when the cell has been executed in the
+      current browser session. Please rerun this cell to enable.
+      </output>
+      <script>// Copyright 2017 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * @fileoverview Helpers for google.colab Python module.
+ */
+(function(scope) {
+function span(text, styleAttributes = {}) {
+  const element = document.createElement('span');
+  element.textContent = text;
+  for (const key of Object.keys(styleAttributes)) {
+    element.style[key] = styleAttributes[key];
+  }
+  return element;
+}
+
+// Max number of bytes which will be uploaded at a time.
+const MAX_PAYLOAD_SIZE = 100 * 1024;
+
+function _uploadFiles(inputId, outputId) {
+  const steps = uploadFilesStep(inputId, outputId);
+  const outputElement = document.getElementById(outputId);
+  // Cache steps on the outputElement to make it available for the next call
+  // to uploadFilesContinue from Python.
+  outputElement.steps = steps;
+
+  return _uploadFilesContinue(outputId);
+}
+
+// This is roughly an async generator (not supported in the browser yet),
+// where there are multiple asynchronous steps and the Python side is going
+// to poll for completion of each step.
+// This uses a Promise to block the python side on completion of each step,
+// then passes the result of the previous step as the input to the next step.
+function _uploadFilesContinue(outputId) {
+  const outputElement = document.getElementById(outputId);
+  const steps = outputElement.steps;
+
+  const next = steps.next(outputElement.lastPromiseValue);
+  return Promise.resolve(next.value.promise).then((value) => {
+    // Cache the last promise value to make it available to the next
+    // step of the generator.
+    outputElement.lastPromiseValue = value;
+    return next.value.response;
+  });
+}
+
+/**
+ * Generator function which is called between each async step of the upload
+ * process.
+ * @param {string} inputId Element ID of the input file picker element.
+ * @param {string} outputId Element ID of the output display.
+ * @return {!Iterable<!Object>} Iterable of next steps.
+ */
+function* uploadFilesStep(inputId, outputId) {
+  const inputElement = document.getElementById(inputId);
+  inputElement.disabled = false;
+
+  const outputElement = document.getElementById(outputId);
+  outputElement.innerHTML = '';
+
+  const pickedPromise = new Promise((resolve) => {
+    inputElement.addEventListener('change', (e) => {
+      resolve(e.target.files);
+    });
+  });
+
+  const cancel = document.createElement('button');
+  inputElement.parentElement.appendChild(cancel);
+  cancel.textContent = 'Cancel upload';
+  const cancelPromise = new Promise((resolve) => {
+    cancel.onclick = () => {
+      resolve(null);
+    };
+  });
+
+  // Wait for the user to pick the files.
+  const files = yield {
+    promise: Promise.race([pickedPromise, cancelPromise]),
+    response: {
+      action: 'starting',
+    }
+  };
+
+  cancel.remove();
+
+  // Disable the input element since further picks are not allowed.
+  inputElement.disabled = true;
+
+  if (!files) {
+    return {
+      response: {
+        action: 'complete',
+      }
+    };
+  }
+
+  for (const file of files) {
+    const li = document.createElement('li');
+    li.append(span(file.name, {fontWeight: 'bold'}));
+    li.append(span(
+        `(${file.type || 'n/a'}) - ${file.size} bytes, ` +
+        `last modified: ${
+            file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() :
+                                    'n/a'} - `));
+    const percent = span('0% done');
+    li.appendChild(percent);
+
+    outputElement.appendChild(li);
+
+    const fileDataPromise = new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        resolve(e.target.result);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+    // Wait for the data to be ready.
+    let fileData = yield {
+      promise: fileDataPromise,
+      response: {
+        action: 'continue',
+      }
+    };
+
+    // Use a chunked sending to avoid message size limits. See b/62115660.
+    let position = 0;
+    do {
+      const length = Math.min(fileData.byteLength - position, MAX_PAYLOAD_SIZE);
+      const chunk = new Uint8Array(fileData, position, length);
+      position += length;
+
+      const base64 = btoa(String.fromCharCode.apply(null, chunk));
+      yield {
+        response: {
+          action: 'append',
+          file: file.name,
+          data: base64,
+        },
+      };
+
+      let percentDone = fileData.byteLength === 0 ?
+          100 :
+          Math.round((position / fileData.byteLength) * 100);
+      percent.textContent = `${percentDone}% done`;
+
+    } while (position < fileData.byteLength);
+  }
+
+  // All done.
+  yield {
+    response: {
+      action: 'complete',
+    }
+  };
+}
+
+scope.google = scope.google || {};
+scope.google.colab = scope.google.colab || {};
+scope.google.colab._files = {
+  _uploadFiles,
+  _uploadFilesContinue,
+};
+})(self);
+</script> </div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving sawah.geojson to sawah.geojson
+File GeoJSON yang digunakan: sawah.geojson
+Jumlah poligon yang dapat digunakan: 100
+
+Jumlah masing-masing kelas:
+sawah          50
+bukan sawah    50
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ekstraksi-nilai-spektral-untuk-training">
+<h2>3. Ekstraksi nilai spektral untuk training<a class="headerlink" href="#ekstraksi-nilai-spektral-untuk-training" title="Permalink to this heading">#</a></h2>
+<p>Setiap poligon digunakan untuk mengambil piksel di dalam area sampel. Semua piksel di dalam poligon mewarisi label <code class="docutils literal notranslate"><span class="pre">type</span></code> poligon tersebut.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_list</span><span class="p">,</span> <span class="n">y_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">inside</span> <span class="o">=</span> <span class="n">geometry_mask</span><span class="p">([</span><span class="n">mapping</span><span class="p">(</span><span class="n">geom</span><span class="p">)],</span> <span class="n">out_shape</span><span class="o">=</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">all_touched</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">inside</span> <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pixels</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">pixels</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">X_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pixels</span><span class="p">)</span>
+            <span class="n">y_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pixels</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Poligon dilewati saat ekstraksi:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">X_list</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tidak ada piksel sampel yang berhasil diekstrak. Periksa CRS dan lokasi GeoJSON terhadap raster.&quot;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">X_list</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah sampel piksel:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitur yang digunakan: B01, B02, B03, B04&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah sampel piksel: 218
+sawah          171
+bukan sawah     47
+Name: count, dtype: int64
+Fitur yang digunakan: B01, B02, B03, B04
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membagi-data-dan-melatih-random-forest">
+<h2>4. Membagi data dan melatih Random Forest<a class="headerlink" href="#membagi-data-dan-melatih-random-forest" title="Permalink to this heading">#</a></h2>
+<p>Pembagian data menggunakan 80% training dan 20% testing, mengikuti parameter pada contoh GitHub. Karena piksel dari poligon yang sama dapat saling mirip, hasil evaluasi ini perlu dibaca sebagai evaluasi berbasis piksel, bukan validasi spasial independen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="s2">&quot;balanced&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span> <span class="s2">&quot;Testing:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training: 174 Testing: 44
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluasi-hasil">
+<h2>5. Evaluasi hasil<a class="headerlink" href="#evaluasi-hasil" title="Permalink to this heading">#</a></h2>
+<p>Notebook referensi menampilkan overall accuracy, kappa index, dan confusion matrix. Di sini juga ditampilkan precision, recall, dan F1-score.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="n">cohen_kappa_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bukan sawah&quot;</span><span class="p">,</span> <span class="s2">&quot;sawah&quot;</span><span class="p">]</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Overall accuracy:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kappa index:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Classification report:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">cm_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">cm_df</span><span class="p">)</span>
+<span class="n">cm_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;confusion_matrix.csv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">values_format</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix - Random Forest&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overall accuracy: 0.8864
+Kappa index: 0.6646
+
+Classification report:
+              precision    recall  f1-score   support
+
+ bukan sawah       0.70      0.78      0.74         9
+       sawah       0.94      0.91      0.93        35
+
+    accuracy                           0.89        44
+   macro avg       0.82      0.85      0.83        44
+weighted avg       0.89      0.89      0.89        44
+</pre></div>
+</div>
+<div class="output text_html">
+  <div id="df-69f3c00b-bb81-4bf0-b199-47e3e8bf1405" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bukan sawah</th>
+      <th>sawah</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>bukan sawah</th>
+      <td>7</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>sawah</th>
+      <td>3</td>
+      <td>32</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-69f3c00b-bb81-4bf0-b199-47e3e8bf1405')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-69f3c00b-bb81-4bf0-b199-47e3e8bf1405 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-69f3c00b-bb81-4bf0-b199-47e3e8bf1405');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+  <div id="id_c8dcc908-e01c-43c2-9ff6-dab4775d6f20">
+    <style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+    <button class="colab-df-generate" onclick="generateWithVariable('cm_df')"
+            title="Generate code using this dataframe."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"/>
+  </svg>
+    </button>
+    <script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_c8dcc908-e01c-43c2-9ff6-dab4775d6f20 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('cm_df');
+      }
+      })();
+    </script>
+  </div>
+
+    </div>
+  </div>
+</div><img alt="_images/c280cffddd4b04805254261566e7778f2f84461db287e5dd17e894cd1a45d17a.png" src="_images/c280cffddd4b04805254261566e7778f2f84461db287e5dd17e894cd1a45d17a.png" />
+</div>
+</div>
+</section>
+<section id="membuat-peta-klasifikasi-seluruh-citra">
+<h2>8. Membuat peta klasifikasi seluruh citra<a class="headerlink" href="#membuat-peta-klasifikasi-seluruh-citra" title="Permalink to this heading">#</a></h2>
+<p>Prediksi dilakukan untuk semua piksel yang memiliki nilai valid. Kode kelas disimpan sebagai 1 = bukan sawah dan 2 = sawah.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">class_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">valid_pixels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">valid_pixels</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+    <span class="n">predicted_all</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">valid_pixels</span><span class="p">])</span>
+    <span class="n">class_map</span><span class="p">[</span><span class="n">valid_pixels</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">predicted_all</span> <span class="o">==</span> <span class="s2">&quot;sawah&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1"># Tampilkan komposit warna semu dari B04, B03, B02</span>
+<span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">98</span><span class="p">])</span>
+<span class="n">rgb_show</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="n">rgb</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span> <span class="o">+</span> <span class="mf">1e-9</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rgb_show</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Komposit B04-B03-B02&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">class_map</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">([</span><span class="s2">&quot;#d9a441&quot;</span><span class="p">,</span> <span class="s2">&quot;#2e8b57&quot;</span><span class="p">]),</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Peta Klasifikasi Random Forest&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kuning = bukan sawah&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hijau = sawah&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b8ba437491a8f8154e3ff8f1a2345eb4d59cfb1690223b6581b69e48d2296a8e.png" src="_images/b8ba437491a8f8154e3ff8f1a2345eb4d59cfb1690223b6581b69e48d2296a8e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>kuning = bukan sawah
+hijau = sawah
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="menyimpan-peta-klasifikasi-ke-geotiff">
+<h2>7. Menyimpan peta klasifikasi ke GeoTIFF<a class="headerlink" href="#menyimpan-peta-klasifikasi-ke-geotiff" title="Permalink to this heading">#</a></h2>
+<p>Nilai 0 berarti piksel tidak valid/tidak diprediksi, 1 berarti bukan sawah, dan 2 berarti sawah.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">out_profile</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Hapus ukuran block dari profile lama</span>
+<span class="n">out_profile</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;blockxsize&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">out_profile</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;blockysize&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="n">out_profile</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">driver</span><span class="o">=</span><span class="s2">&quot;GTiff&quot;</span><span class="p">,</span>
+    <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;uint8&quot;</span><span class="p">,</span>
+    <span class="n">nodata</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">compress</span><span class="o">=</span><span class="s2">&quot;lzw&quot;</span><span class="p">,</span>
+    <span class="n">tiled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">blockxsize</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">blockysize</span><span class="o">=</span><span class="mi">256</span>
+<span class="p">)</span>
+
+<span class="n">out_path</span> <span class="o">=</span> <span class="s2">&quot;klasifikasi_sawah_lenteng.tif&quot;</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">out_profile</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">class_map</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Raster hasil disimpan:&quot;</span><span class="p">,</span> <span class="n">out_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Raster hasil disimpan: klasifikasi_sawah_lenteng.tif
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="catatan-interpretasi">
+<h2>8. Catatan interpretasi<a class="headerlink" href="#catatan-interpretasi" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Hasil klasifikasi bergantung pada kualitas dan ketepatan poligon label di GeoJSON.</p></li>
+<li><p>Jika label pada GeoJSON memiliki ejaan berbeda, sesuaikan daftar kelas pada bagian preprocessing.</p></li>
+<li><p>Untuk evaluasi yang lebih kuat, gunakan pemisahan training/testing berdasarkan poligon, bukan pembagian acak piksel, agar piksel dari poligon yang sama tidak tersebar ke kedua kelompok.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pertemuan_5.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Pertemuan_5</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalasi-dan-import-library">1. Instalasi dan import library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-data">2. Membaca data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-nilai-spektral-untuk-training">3. Ekstraksi nilai spektral untuk training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-dan-melatih-random-forest">4. Membagi data dan melatih Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-hasil">5. Evaluasi hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-peta-klasifikasi-seluruh-citra">8. Membuat peta klasifikasi seluruh citra</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-peta-klasifikasi-ke-geotiff">7. Menyimpan peta klasifikasi ke GeoTIFF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-interpretasi">8. Catatan interpretasi</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mohammad Waqidi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
