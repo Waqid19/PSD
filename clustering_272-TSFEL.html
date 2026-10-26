@@ -191,19 +191,6 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="pertemuan_4.html">Pertemuan_4</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pertemuan_5.html">Pertemuan_5</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -408,76 +395,72 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime">Analisis Data Fitur TSFEL Menggunakan PCA dan K-Means pada KNIME</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">1. Tujuan</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-digunakan">2. Data yang Digunakan</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">3. Gambaran Workflow</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-setiap-node">4. Penjelasan Setiap Node</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">4.1 Excel Reader</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dibaca">Data yang Dibaca</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-konfigurasi">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">Hasil</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-pertama-k-means-tanpa-pca">5. Jalur Pertama: k-Means Tanpa PCA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-atas">5.1 k-Means Bagian Atas</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-digunakan">2. Data yang Digunakan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">3. Gambaran Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-setiap-node">4. Penjelasan Setiap Node</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">4.1 Excel Reader</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dibaca">Data yang Dibaca</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-konfigurasi">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">Hasil</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-kedua-pca">6. Jalur Kedua: PCA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-principal-component-analysis">6.1 PCA (Principal Component Analysis)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-pca">Tujuan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-pertama-k-means-tanpa-pca">5. Jalur Pertama: k-Means Tanpa PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-atas">5.1 k-Means Bagian Atas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Hasil</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">7. Table View</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fungsi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-yang-dapat-diamati">Informasi yang Dapat Diamati</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-penggunaan">Cara Penggunaan</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-dengan-pca">8. k-Means dengan PCA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means">8.1 k-Means</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-kedua-pca">6. Jalur Kedua: PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-principal-component-analysis">6.1 PCA (<em>Principal Component Analysis</em>)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-pca">Tujuan PCA</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-dua-jalur-clustering">9. Perbedaan Dua Jalur Clustering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-workflow">10. Perbandingan Workflow</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-1-data-asli">Pendekatan 1 — Data Asli</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-2-data-hasil-pca">Pendekatan 2 — Data Hasil PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">7. Table View</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-yang-dapat-diamati">Informasi yang Dapat Diamati</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-penggunaan">Cara Penggunaan</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">11. Interpretasi Hasil</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kelebihan-workflow">12. Kelebihan Workflow</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-data-asli-dan-data-hasil-pca">1. Membandingkan data asli dan data hasil PCA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menguji-pengaruh-pca">2. Menguji pengaruh PCA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-jumlah-cluster">3. Membandingkan jumlah cluster</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memeriksa-hasil-pca">4. Memeriksa hasil PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-dengan-pca">8. k-Means dengan PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-bawah">8.1 k-Means Bagian Bawah</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Hasil</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hal-yang-perlu-diperhatikan">13. Hal yang Perlu Diperhatikan</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-konfigurasi-node">14. Ringkasan Konfigurasi Node</a></li>
 </ul>
-
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-dua-jalur-clustering">9. Perbedaan Dua Jalur Clustering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-workflow">10. Perbandingan Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-1-data-asli">Pendekatan 1 — Data Asli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-2-data-hasil-pca">Pendekatan 2 — Data Hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">11. Interpretasi Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kelebihan-workflow">12. Kelebihan Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-data-asli-dan-data-hasil-pca">1. Membandingkan Data Asli dan Data Hasil PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menguji-pengaruh-pca">2. Menguji Pengaruh PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-jumlah-cluster">3. Membandingkan Jumlah Cluster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memeriksa-hasil-pca">4. Memeriksa Hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hal-yang-perlu-diperhatikan">13. Hal yang Perlu Diperhatikan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-konfigurasi-node">14. Ringkasan Konfigurasi Node</a></li>
+</ul>
             </nav>
         </div>
     </div>
@@ -493,26 +476,23 @@ document.write(`
 <section id="analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime">
 <h2>Analisis Data Fitur TSFEL Menggunakan PCA dan K-Means pada KNIME<a class="headerlink" href="#analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime" title="Permalink to this heading">#</a></h2>
 </section>
-<hr class="docutils" />
 <section id="tujuan">
 <h2>1. Tujuan<a class="headerlink" href="#tujuan" title="Permalink to this heading">#</a></h2>
 <p>Workflow ini digunakan untuk melakukan analisis pengelompokan (<em>clustering</em>) terhadap data fitur TSFEL dari data kualitas udara.</p>
 <p>Pada workflow, terdapat <strong>dua jalur clustering</strong> yang berbeda:</p>
-<p><img alt="workflow" src="_images/workflow.png" /></p>
+<p><img alt="Workflow" src="_images/workflow.png" /></p>
 <ol class="arabic simple">
 <li><p><strong>Jalur pertama:</strong> data dari Excel Reader langsung diproses menggunakan k-Means dengan <strong>3 cluster</strong>, tanpa PCA.</p></li>
 <li><p><strong>Jalur kedua:</strong> data dari Excel Reader diproses terlebih dahulu menggunakan PCA hingga menjadi <strong>19 dimensi</strong>, kemudian hasil PCA diproses menggunakan k-Means dengan <strong>5 cluster</strong>.</p></li>
 </ol>
 <p>Dengan struktur tersebut, workflow dapat digunakan untuk melihat perbedaan hasil clustering antara:</p>
 <ul class="simple">
-<li><p><strong>data fitur asli</strong>, dan</p></li>
-<li><p><strong>data yang telah direduksi menggunakan PCA</strong>.</p></li>
+<li><p><strong>Data fitur asli</strong>, dan</p></li>
+<li><p><strong>Data yang telah direduksi menggunakan PCA</strong>.</p></li>
 </ul>
 </section>
-</section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="data-yang-digunakan">
-<h1>2. Data yang Digunakan<a class="headerlink" href="#data-yang-digunakan" title="Permalink to this heading">#</a></h1>
+<section id="data-yang-digunakan">
+<h2>2. Data yang Digunakan<a class="headerlink" href="#data-yang-digunakan" title="Permalink to this heading">#</a></h2>
 <p>Data berasal dari file Excel:</p>
 <p><a class="reference download internal" download="" href="_downloads/be5d637357af3107a2d4cbec70b5d975/data_tsfel_20260920_080900.xlsx"><span class="xref download myst">data_tsfel_20260920_080900.xlsx</span></a></p>
 <p>Sheet yang digunakan:</p>
@@ -584,25 +564,23 @@ document.write(`
 </pre></div>
 </div>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="gambaran-workflow">
-<h1>3. Gambaran Workflow<a class="headerlink" href="#gambaran-workflow" title="Permalink to this heading">#</a></h1>
+<section id="gambaran-workflow">
+<h2>3. Gambaran Workflow<a class="headerlink" href="#gambaran-workflow" title="Permalink to this heading">#</a></h2>
 <p>Workflow terdiri dari lima node utama:</p>
-<p><img alt="workflow" src="_images/workflow.png" /></p>
+<p><img alt="Workflow" src="_images/workflow.png" /></p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="penjelasan-setiap-node">
-<h1>4. Penjelasan Setiap Node<a class="headerlink" href="#penjelasan-setiap-node" title="Permalink to this heading">#</a></h1>
+<section id="penjelasan-setiap-node">
+<h2>4. Penjelasan Setiap Node<a class="headerlink" href="#penjelasan-setiap-node" title="Permalink to this heading">#</a></h2>
 <section id="excel-reader">
-<h2>4.1 Excel Reader<a class="headerlink" href="#excel-reader" title="Permalink to this heading">#</a></h2>
+<h3>4.1 Excel Reader<a class="headerlink" href="#excel-reader" title="Permalink to this heading">#</a></h3>
 <section id="fungsi">
-<h3>Fungsi<a class="headerlink" href="#fungsi" title="Permalink to this heading">#</a></h3>
+<h4>Fungsi<a class="headerlink" href="#fungsi" title="Permalink to this heading">#</a></h4>
 <p><strong>Excel Reader</strong> merupakan node pertama yang digunakan untuk membaca data dari file Excel.</p>
-<p><img alt="Excel Reade" src="_images/excel-raider.png" /></p>
-<p>Node ini menjadi sumber data bagi dua jalur analisis.
-Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
+<p><img alt="Excel Reader" src="_images/excel-raider.png" /></p>
+<p>Node ini menjadi sumber data bagi dua jalur analisis. Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
 </section>
 <section id="data-yang-dibaca">
-<h3>Data yang Dibaca<a class="headerlink" href="#data-yang-dibaca" title="Permalink to this heading">#</a></h3>
+<h4>Data yang Dibaca<a class="headerlink" href="#data-yang-dibaca" title="Permalink to this heading">#</a></h4>
 <p>File:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>data_tsfel_20260920_080900.xlsx
 </pre></div>
@@ -620,7 +598,7 @@ Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
 </ul>
 </section>
 <section id="cara-konfigurasi">
-<h3>Cara Konfigurasi<a class="headerlink" href="#cara-konfigurasi" title="Permalink to this heading">#</a></h3>
+<h4>Cara Konfigurasi<a class="headerlink" href="#cara-konfigurasi" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p>Masukkan node <strong>Excel Reader</strong> ke workflow.</p></li>
 <li><p>Klik dua kali node tersebut.</p></li>
@@ -632,60 +610,53 @@ Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
 </ol>
 </section>
 <section id="hasil">
-<h3>Hasil<a class="headerlink" href="#hasil" title="Permalink to this heading">#</a></h3>
+<h4>Hasil<a class="headerlink" href="#hasil" title="Permalink to this heading">#</a></h4>
 <p>Setelah dijalankan, Excel Reader menghasilkan tabel yang dapat diteruskan langsung ke k-Means dan juga ke PCA.</p>
 </section>
 </section>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="jalur-pertama-k-means-tanpa-pca">
-<h1>5. Jalur Pertama: k-Means Tanpa PCA<a class="headerlink" href="#jalur-pertama-k-means-tanpa-pca" title="Permalink to this heading">#</a></h1>
+<section id="jalur-pertama-k-means-tanpa-pca">
+<h2>5. Jalur Pertama: k-Means Tanpa PCA<a class="headerlink" href="#jalur-pertama-k-means-tanpa-pca" title="Permalink to this heading">#</a></h2>
 <section id="k-means-bagian-atas">
-<h2>5.1 k-Means Bagian Atas<a class="headerlink" href="#k-means-bagian-atas" title="Permalink to this heading">#</a></h2>
+<h3>5.1 k-Means Bagian Atas<a class="headerlink" href="#k-means-bagian-atas" title="Permalink to this heading">#</a></h3>
 <section id="id1">
-<h3>Fungsi<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h4>Fungsi<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
 <p>Node k-Means bagian atas melakukan <strong>clustering langsung terhadap data dari Excel Reader</strong>.</p>
 <p>Node ini <strong>tidak melewati PCA</strong>.</p>
 </section>
 <section id="konfigurasi">
-<h3>Konfigurasi<a class="headerlink" href="#konfigurasi" title="Permalink to this heading">#</a></h3>
+<h4>Konfigurasi<a class="headerlink" href="#konfigurasi" title="Permalink to this heading">#</a></h4>
 <p>Pada k-Means ini digunakan:</p>
-<p><img alt="K-Means" src="_images/k-means3.png" /></p>
+<p><img alt="Konfigurasi k-Means" src="_images/k-means3.png" /></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 3
 </pre></div>
 </div>
 <p>Dengan demikian, data dikelompokkan menjadi tiga cluster.</p>
 </section>
 <section id="id2">
-<h3>Cara Konfigurasi<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<h4>Cara Konfigurasi<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p>Hubungkan output <strong>Excel Reader</strong> langsung ke k-Means bagian atas.</p></li>
 <li><p>Buka konfigurasi k-Means.</p></li>
-<li><p>Atur:</p></li>
-</ol>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 3
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
+<li><p>Atur jumlah cluster menjadi <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p></li>
 <li><p>Tentukan kolom numerik yang digunakan sebagai variabel clustering.</p></li>
 <li><p>Jalankan node dengan <strong>Execute</strong>.</p></li>
 </ol>
 </section>
 <section id="id3">
-<h3>Hasil<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<h4>Hasil<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
 <p>Setiap data akan memperoleh label cluster berdasarkan kemiripan pada data fitur yang digunakan.</p>
-<p><img alt="K-Means" src="_images/k-means3.png" /></p>
+<p><img alt="Hasil atau konfigurasi k-Means" src="_images/k-means3.png" /></p>
 <p>Karena proses PCA tidak dilakukan, clustering pada jalur ini menggunakan <strong>data fitur sebelum reduksi PCA</strong>.</p>
 </section>
 </section>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="jalur-kedua-pca">
-<h1>6. Jalur Kedua: PCA<a class="headerlink" href="#jalur-kedua-pca" title="Permalink to this heading">#</a></h1>
+<section id="jalur-kedua-pca">
+<h2>6. Jalur Kedua: PCA<a class="headerlink" href="#jalur-kedua-pca" title="Permalink to this heading">#</a></h2>
 <section id="pca-principal-component-analysis">
-<h2>6.1 PCA (Principal Component Analysis)<a class="headerlink" href="#pca-principal-component-analysis" title="Permalink to this heading">#</a></h2>
+<h3>6.1 PCA (<em>Principal Component Analysis</em>)<a class="headerlink" href="#pca-principal-component-analysis" title="Permalink to this heading">#</a></h3>
 <section id="id4">
-<h3>Fungsi<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h4>Fungsi<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
 <p>PCA digunakan untuk melakukan <strong>reduksi dimensi</strong> terhadap fitur TSFEL.</p>
 <p>Data awal memiliki:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>272 fitur TSFEL
@@ -700,29 +671,24 @@ Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
        ↓
       PCA
        ↓
-19 dimensi
+   19 dimensi
 </pre></div>
 </div>
-<p><img alt="PCA" src="_images/pca.png" /></p>
+<p><img alt="Konfigurasi PCA" src="_images/pca.png" /></p>
 </section>
 <section id="id5">
-<h3>Cara Konfigurasi<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<h4>Cara Konfigurasi<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p>Hubungkan output Excel Reader ke PCA.</p></li>
 <li><p>Buka konfigurasi PCA.</p></li>
-<li><p>Atur:</p></li>
-</ol>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Dimension(s) to reduce to = 19
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
+<li><p>Atur jumlah dimensi hasil reduksi menjadi <code class="docutils literal notranslate"><span class="pre">19</span></code>.</p></li>
 <li><p>Pastikan kolom identitas tidak digunakan sebagai variabel numerik PCA.</p></li>
 <li><p>Klik <strong>Apply</strong>.</p></li>
 <li><p>Klik <strong>Execute</strong>.</p></li>
 </ol>
 </section>
 <section id="tujuan-pca">
-<h3>Tujuan PCA<a class="headerlink" href="#tujuan-pca" title="Permalink to this heading">#</a></h3>
+<h4>Tujuan PCA<a class="headerlink" href="#tujuan-pca" title="Permalink to this heading">#</a></h4>
 <p>PCA digunakan untuk:</p>
 <ul class="simple">
 <li><p>Mengurangi jumlah dimensi data.</p></li>
@@ -733,27 +699,26 @@ Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
 </section>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="table-view">
-<h1>7. Table View<a class="headerlink" href="#table-view" title="Permalink to this heading">#</a></h1>
+<section id="table-view">
+<h2>7. Table View<a class="headerlink" href="#table-view" title="Permalink to this heading">#</a></h2>
 <section id="id6">
-<h2>Fungsi<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<h3>Fungsi<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p><strong>Table View</strong> digunakan untuk melihat hasil data setelah proses PCA.</p>
-<p>Node ini tidak melakukan clustering.</p>
-<p>Table View hanya digunakan untuk memeriksa hasil transformasi data.</p>
+<p>Node ini tidak melakukan clustering. Table View hanya digunakan untuk memeriksa hasil transformasi data.</p>
 </section>
 <section id="informasi-yang-dapat-diamati">
-<h2>Informasi yang Dapat Diamati<a class="headerlink" href="#informasi-yang-dapat-diamati" title="Permalink to this heading">#</a></h2>
+<h3>Informasi yang Dapat Diamati<a class="headerlink" href="#informasi-yang-dapat-diamati" title="Permalink to this heading">#</a></h3>
 <p>Melalui Table View, hasil PCA dapat diperiksa dalam bentuk tabel, misalnya:</p>
 <ul class="simple">
-<li><p>baris data</p></li>
-<li><p>komponen hasil PCA</p></li>
-<li><p>nilai masing-masing komponen</p></li>
-<li><p>informasi identitas yang diteruskan oleh workflow</p></li>
+<li><p>Baris data.</p></li>
+<li><p>Komponen hasil PCA.</p></li>
+<li><p>Nilai masing-masing komponen.</p></li>
+<li><p>Informasi identitas yang diteruskan oleh workflow.</p></li>
 </ul>
 <p><img alt="Table View" src="_images/table-view.png" /></p>
 </section>
 <section id="cara-penggunaan">
-<h2>Cara Penggunaan<a class="headerlink" href="#cara-penggunaan" title="Permalink to this heading">#</a></h2>
+<h3>Cara Penggunaan<a class="headerlink" href="#cara-penggunaan" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Hubungkan output PCA ke Table View.</p></li>
 <li><p>Jalankan PCA.</p></li>
@@ -762,49 +727,42 @@ Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
 </ol>
 </section>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="k-means-dengan-pca">
-<h1>8. k-Means dengan PCA<a class="headerlink" href="#k-means-dengan-pca" title="Permalink to this heading">#</a></h1>
-<section id="k-means">
-<h2>8.1 k-Means<a class="headerlink" href="#k-means" title="Permalink to this heading">#</a></h2>
+<section id="k-means-dengan-pca">
+<h2>8. k-Means dengan PCA<a class="headerlink" href="#k-means-dengan-pca" title="Permalink to this heading">#</a></h2>
+<section id="k-means-bagian-bawah">
+<h3>8.1 k-Means Bagian Bawah<a class="headerlink" href="#k-means-bagian-bawah" title="Permalink to this heading">#</a></h3>
 <section id="id7">
-<h3>Fungsi<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<h4>Fungsi<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
 <p>Node k-Means bagian bawah melakukan clustering terhadap <strong>hasil PCA</strong>.</p>
 <p>Berbeda dengan k-Means bagian atas, node ini menerima data setelah proses reduksi dimensi.</p>
 </section>
 <section id="id8">
-<h3>Konfigurasi<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<h4>Konfigurasi<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h4>
 <p>Pada k-Means bagian bawah digunakan:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 5
 </pre></div>
 </div>
 </section>
 <section id="id9">
-<h3>Cara Konfigurasi<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<h4>Cara Konfigurasi<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p>Hubungkan output PCA ke k-Means bagian bawah.</p></li>
 <li><p>Buka konfigurasi k-Means.</p></li>
-<li><p>Atur:</p></li>
-</ol>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Number of clusters = 5
-</pre></div>
-</div>
-<p><img alt="K-Means" src="_images/k-means5.png" /></p>
-<ol class="arabic simple" start="4">
+<li><p>Atur jumlah cluster menjadi <code class="docutils literal notranslate"><span class="pre">5</span></code>.</p></li>
 <li><p>Tentukan variabel numerik hasil PCA sebagai variabel clustering.</p></li>
 <li><p>Jalankan node.</p></li>
 </ol>
+<p><img alt="Konfigurasi k-Means" src="_images/k-means5.png" /></p>
 </section>
 <section id="id10">
-<h3>Hasil<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
-<p>Data dikelompokkan menjadi lima cluster:</p>
-<p><img alt="K-Means" src="_images/hasil_k-means5.png" /></p>
+<h4>Hasil<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h4>
+<p>Data dikelompokkan menjadi lima cluster.</p>
+<p><img alt="Hasil k-Means dengan 5 cluster" src="_images/hasil_k-means5.png" /></p>
 </section>
 </section>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="perbedaan-dua-jalur-clustering">
-<h1>9. Perbedaan Dua Jalur Clustering<a class="headerlink" href="#perbedaan-dua-jalur-clustering" title="Permalink to this heading">#</a></h1>
+<section id="perbedaan-dua-jalur-clustering">
+<h2>9. Perbedaan Dua Jalur Clustering<a class="headerlink" href="#perbedaan-dua-jalur-clustering" title="Permalink to this heading">#</a></h2>
 <p>Ini merupakan bagian utama dari workflow terbaru.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -838,12 +796,11 @@ Dengan demikian, data dari Excel digunakan untuk dua proses yang berbeda.</p>
 </table>
 </div>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="perbandingan-workflow">
-<h1>10. Perbandingan Workflow<a class="headerlink" href="#perbandingan-workflow" title="Permalink to this heading">#</a></h1>
+<section id="perbandingan-workflow">
+<h2>10. Perbandingan Workflow<a class="headerlink" href="#perbandingan-workflow" title="Permalink to this heading">#</a></h2>
 <p>Workflow ini memungkinkan dilakukan perbandingan berdasarkan dua pendekatan.</p>
 <section id="pendekatan-1-data-asli">
-<h2>Pendekatan 1 — Data Asli<a class="headerlink" href="#pendekatan-1-data-asli" title="Permalink to this heading">#</a></h2>
+<h3>Pendekatan 1 — Data Asli<a class="headerlink" href="#pendekatan-1-data-asli" title="Permalink to this heading">#</a></h3>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Excel
   ↓
 Fitur TSFEL
@@ -856,7 +813,7 @@ k-Means
 <p>Pada pendekatan ini, proses clustering dilakukan tanpa reduksi dimensi PCA.</p>
 </section>
 <section id="pendekatan-2-data-hasil-pca">
-<h2>Pendekatan 2 — Data Hasil PCA<a class="headerlink" href="#pendekatan-2-data-hasil-pca" title="Permalink to this heading">#</a></h2>
+<h3>Pendekatan 2 — Data Hasil PCA<a class="headerlink" href="#pendekatan-2-data-hasil-pca" title="Permalink to this heading">#</a></h3>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Excel
   ↓
 Fitur TSFEL
@@ -873,36 +830,34 @@ k-Means
 <p>Pada pendekatan ini, clustering dilakukan setelah data direduksi menjadi 19 dimensi.</p>
 </section>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="interpretasi-hasil">
-<h1>11. Interpretasi Hasil<a class="headerlink" href="#interpretasi-hasil" title="Permalink to this heading">#</a></h1>
+<section id="interpretasi-hasil">
+<h2>11. Interpretasi Hasil<a class="headerlink" href="#interpretasi-hasil" title="Permalink to this heading">#</a></h2>
 <p>Hasil k-Means dari kedua jalur dapat digunakan untuk melihat perbedaan pengelompokan data.</p>
 <p>Pada jalur pertama:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>k = 3
 </pre></div>
 </div>
-<p>data dibagi menjadi tiga cluster berdasarkan fitur yang digunakan dari data Excel.</p>
+<p>Data dibagi menjadi tiga cluster berdasarkan fitur yang digunakan dari data Excel.</p>
 <p>Pada jalur kedua:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>k = 5
 </pre></div>
 </div>
-<p>data dibagi menjadi lima cluster berdasarkan komponen hasil PCA.</p>
-<hr class="docutils" />
+<p>Data dibagi menjadi lima cluster berdasarkan komponen hasil PCA.</p>
+<p>Perlu diperhatikan bahwa label cluster yang dihasilkan oleh kedua model tidak selalu memiliki arti atau urutan yang sama. Interpretasi lebih lanjut perlu mempertimbangkan karakteristik data pada setiap cluster.</p>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="kelebihan-workflow">
-<h1>12. Kelebihan Workflow<a class="headerlink" href="#kelebihan-workflow" title="Permalink to this heading">#</a></h1>
-<p>Workflow ini memiliki beberapa kegunaan:</p>
+<section id="kelebihan-workflow">
+<h2>12. Kelebihan Workflow<a class="headerlink" href="#kelebihan-workflow" title="Permalink to this heading">#</a></h2>
+<p>Workflow ini memiliki beberapa kegunaan.</p>
 <section id="membandingkan-data-asli-dan-data-hasil-pca">
-<h2>1. Membandingkan data asli dan data hasil PCA<a class="headerlink" href="#membandingkan-data-asli-dan-data-hasil-pca" title="Permalink to this heading">#</a></h2>
+<h3>1. Membandingkan Data Asli dan Data Hasil PCA<a class="headerlink" href="#membandingkan-data-asli-dan-data-hasil-pca" title="Permalink to this heading">#</a></h3>
 <p>Karena terdapat dua jalur clustering, hasil pengelompokan dapat dibandingkan antara data asli dan data setelah reduksi dimensi.</p>
 </section>
 <section id="menguji-pengaruh-pca">
-<h2>2. Menguji pengaruh PCA<a class="headerlink" href="#menguji-pengaruh-pca" title="Permalink to this heading">#</a></h2>
+<h3>2. Menguji Pengaruh PCA<a class="headerlink" href="#menguji-pengaruh-pca" title="Permalink to this heading">#</a></h3>
 <p>PCA dapat mengubah representasi data sebelum digunakan dalam clustering. Workflow ini menyediakan jalur untuk melihat hasil clustering setelah PCA.</p>
 </section>
 <section id="membandingkan-jumlah-cluster">
-<h2>3. Membandingkan jumlah cluster<a class="headerlink" href="#membandingkan-jumlah-cluster" title="Permalink to this heading">#</a></h2>
+<h3>3. Membandingkan Jumlah Cluster<a class="headerlink" href="#membandingkan-jumlah-cluster" title="Permalink to this heading">#</a></h3>
 <p>Jumlah cluster juga berbeda:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>k = 3
 </pre></div>
@@ -914,13 +869,12 @@ k-Means
 <p>Sehingga hasil pengelompokan memiliki struktur yang berbeda.</p>
 </section>
 <section id="memeriksa-hasil-pca">
-<h2>4. Memeriksa hasil PCA<a class="headerlink" href="#memeriksa-hasil-pca" title="Permalink to this heading">#</a></h2>
+<h3>4. Memeriksa Hasil PCA<a class="headerlink" href="#memeriksa-hasil-pca" title="Permalink to this heading">#</a></h3>
 <p>Table View membantu melihat data setelah PCA sebelum digunakan dalam proses clustering.</p>
 </section>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="hal-yang-perlu-diperhatikan">
-<h1>13. Hal yang Perlu Diperhatikan<a class="headerlink" href="#hal-yang-perlu-diperhatikan" title="Permalink to this heading">#</a></h1>
+<section id="hal-yang-perlu-diperhatikan">
+<h2>13. Hal yang Perlu Diperhatikan<a class="headerlink" href="#hal-yang-perlu-diperhatikan" title="Permalink to this heading">#</a></h2>
 <p>Ada dua perbedaan sekaligus antara kedua hasil k-Means:</p>
 <ol class="arabic simple">
 <li><p><strong>Input datanya berbeda</strong></p>
@@ -931,8 +885,8 @@ k-Means
 </li>
 <li><p><strong>Jumlah cluster berbeda</strong></p>
 <ul class="simple">
-<li><p>k-Means atas menggunakan k = 3.</p></li>
-<li><p>k-Means bawah menggunakan k = 5.</p></li>
+<li><p>k-Means atas menggunakan <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">3</span></code>.</p></li>
+<li><p>k-Means bawah menggunakan <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">5</span></code>.</p></li>
 </ul>
 </li>
 </ol>
@@ -949,9 +903,8 @@ Dengan PCA → k=5
 </div>
 <p>maka konfigurasi workflow pada gambar sudah mengikuti struktur tersebut.</p>
 </section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="ringkasan-konfigurasi-node">
-<h1>14. Ringkasan Konfigurasi Node<a class="headerlink" href="#ringkasan-konfigurasi-node" title="Permalink to this heading">#</a></h1>
+<section id="ringkasan-konfigurasi-node">
+<h2>14. Ringkasan Konfigurasi Node<a class="headerlink" href="#ringkasan-konfigurasi-node" title="Permalink to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-right"><p>No.</p></th>
@@ -995,7 +948,7 @@ Dengan PCA → k=5
 </tbody>
 </table>
 </div>
-<hr class="docutils" />
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1062,76 +1015,72 @@ Dengan PCA → k=5
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analisis dan Pengelompokan Data Kualitas Udara Menggunakan PCA dan K-Means pada KNIME</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-data-fitur-tsfel-menggunakan-pca-dan-k-means-pada-knime">Analisis Data Fitur TSFEL Menggunakan PCA dan K-Means pada KNIME</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">1. Tujuan</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-digunakan">2. Data yang Digunakan</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">3. Gambaran Workflow</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-setiap-node">4. Penjelasan Setiap Node</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">4.1 Excel Reader</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dibaca">Data yang Dibaca</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-konfigurasi">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">Hasil</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-pertama-k-means-tanpa-pca">5. Jalur Pertama: k-Means Tanpa PCA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-atas">5.1 k-Means Bagian Atas</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-digunakan">2. Data yang Digunakan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-workflow">3. Gambaran Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-setiap-node">4. Penjelasan Setiap Node</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">4.1 Excel Reader</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dibaca">Data yang Dibaca</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-konfigurasi">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">Hasil</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-kedua-pca">6. Jalur Kedua: PCA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-principal-component-analysis">6.1 PCA (Principal Component Analysis)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-pca">Tujuan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-pertama-k-means-tanpa-pca">5. Jalur Pertama: k-Means Tanpa PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-atas">5.1 k-Means Bagian Atas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Hasil</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">7. Table View</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fungsi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-yang-dapat-diamati">Informasi yang Dapat Diamati</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-penggunaan">Cara Penggunaan</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-dengan-pca">8. k-Means dengan PCA</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means">8.1 k-Means</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fungsi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Cara Konfigurasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jalur-kedua-pca">6. Jalur Kedua: PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-principal-component-analysis">6.1 PCA (<em>Principal Component Analysis</em>)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-pca">Tujuan PCA</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-dua-jalur-clustering">9. Perbedaan Dua Jalur Clustering</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-workflow">10. Perbandingan Workflow</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-1-data-asli">Pendekatan 1 — Data Asli</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-2-data-hasil-pca">Pendekatan 2 — Data Hasil PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">7. Table View</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Fungsi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informasi-yang-dapat-diamati">Informasi yang Dapat Diamati</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-penggunaan">Cara Penggunaan</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">11. Interpretasi Hasil</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kelebihan-workflow">12. Kelebihan Workflow</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-data-asli-dan-data-hasil-pca">1. Membandingkan data asli dan data hasil PCA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menguji-pengaruh-pca">2. Menguji pengaruh PCA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-jumlah-cluster">3. Membandingkan jumlah cluster</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memeriksa-hasil-pca">4. Memeriksa hasil PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-dengan-pca">8. k-Means dengan PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-bagian-bawah">8.1 k-Means Bagian Bawah</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Fungsi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Cara Konfigurasi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Hasil</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hal-yang-perlu-diperhatikan">13. Hal yang Perlu Diperhatikan</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-konfigurasi-node">14. Ringkasan Konfigurasi Node</a></li>
 </ul>
-
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-dua-jalur-clustering">9. Perbedaan Dua Jalur Clustering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-workflow">10. Perbandingan Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-1-data-asli">Pendekatan 1 — Data Asli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pendekatan-2-data-hasil-pca">Pendekatan 2 — Data Hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-hasil">11. Interpretasi Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kelebihan-workflow">12. Kelebihan Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-data-asli-dan-data-hasil-pca">1. Membandingkan Data Asli dan Data Hasil PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menguji-pengaruh-pca">2. Menguji Pengaruh PCA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membandingkan-jumlah-cluster">3. Membandingkan Jumlah Cluster</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memeriksa-hasil-pca">4. Memeriksa Hasil PCA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hal-yang-perlu-diperhatikan">13. Hal yang Perlu Diperhatikan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-konfigurasi-node">14. Ringkasan Konfigurasi Node</a></li>
+</ul>
   </nav></div>
 
 </div></div>
